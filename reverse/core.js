@@ -84,41 +84,41 @@ function vk_sdk() {
 }
 
 function load_game_resources_start() {
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['audio_resources']['length']; _0xdbf0x4++) {
-    var _0xdbf0x5 = document['createElement']('link');
-    _0xdbf0x5['href'] = 'https://cdn.bravegames.space/regiment/sounds/' + window['audio_resources'][_0xdbf0x4];
-    _0xdbf0x5['rel'] = 'prefetch';
-    _0xdbf0x5['as'] = 'audio';
-    document['head']['appendChild'](_0xdbf0x5)
+  for (var i = 0; i < window['audio_resources']['length']; i++) {
+    var link = document['createElement']('link');
+    link['href'] = 'https://cdn.bravegames.space/regiment/sounds/' + window['audio_resources'][i];
+    link['rel'] = 'prefetch';
+    link['as'] = 'audio';
+    document['head']['appendChild'](link)
   };
   window['proc'] = window['images_resources']['length'] / 75;
   document['getElementById']('current_step')['innerHTML'] = 'Загрузка ресурсов игры';
   document['getElementById']('progress')['innerHTML'] = 0;
   document['getElementById']('preloader_meter')['style']['width'] = '0%';
-  var _0xdbf0x6 = window['images_resources']['length'] % 10;
-  var _0xdbf0x7 = (window['images_resources']['length'] - _0xdbf0x6) / 10;
+  var a = window['images_resources']['length'] % 10;
+  var chunk = (window['images_resources']['length'] - a) / 10;
   window['loaded_resources'] = 0;
   window['loaded_final'] = 0;
-  load_game_resources(0, _0xdbf0x7);
-  load_game_resources(_0xdbf0x7, _0xdbf0x7 * 2);
-  load_game_resources(_0xdbf0x7 * 2, _0xdbf0x7 * 3);
-  load_game_resources(_0xdbf0x7 * 3, _0xdbf0x7 * 4);
-  load_game_resources(_0xdbf0x7 * 4, _0xdbf0x7 * 5);
-  load_game_resources(_0xdbf0x7 * 5, _0xdbf0x7 * 6);
-  load_game_resources(_0xdbf0x7 * 6, _0xdbf0x7 * 7);
-  load_game_resources(_0xdbf0x7 * 7, _0xdbf0x7 * 8);
-  load_game_resources(_0xdbf0x7 * 8, _0xdbf0x7 * 9);
-  load_game_resources(_0xdbf0x7 * 9, window['images_resources']['length'])
+  load_game_resources(0, chunk);
+  load_game_resources(chunk, chunk * 2);
+  load_game_resources(chunk * 2, chunk * 3);
+  load_game_resources(chunk * 3, chunk * 4);
+  load_game_resources(chunk * 4, chunk * 5);
+  load_game_resources(chunk * 5, chunk * 6);
+  load_game_resources(chunk * 6, chunk * 7);
+  load_game_resources(chunk * 7, chunk * 8);
+  load_game_resources(chunk * 8, chunk * 9);
+  load_game_resources(chunk * 9, window['images_resources']['length'])
 }
 
-function load_game_resources(_0xdbf0x9, _0xdbf0xa) {
+function load_game_resources(a, b) {
   load_game_resources_result();
-  if (_0xdbf0x9 < _0xdbf0xa) {
-    var _0xdbf0xb = document['createElement']('img');
-    _0xdbf0xb['onload'] = function() {
-      load_game_resources(_0xdbf0x9 + 1, _0xdbf0xa)
+  if (a < b) {
+    var img = document['createElement']('img');
+    img['onload'] = function() {
+      load_game_resources(a + 1, b)
     };
-    _0xdbf0xb['src'] = 'https://cdn.bravegames.space/regiment/images/' + window['images_resources'][_0xdbf0x9]
+    img['src'] = 'https://cdn.bravegames.space/regiment/images/' + window['images_resources'][a]
   } else {
     load_game_resources_final()
   }
@@ -126,9 +126,9 @@ function load_game_resources(_0xdbf0x9, _0xdbf0xa) {
 
 function load_game_resources_result(_0xdbf0xd) {
   window['loaded_resources']++;
-  var _0xdbf0xe = Math['ceil'](window['loaded_resources'] / window['proc']);
-  document['getElementById']('progress')['innerHTML'] = _0xdbf0xe;
-  document['getElementById']('preloader_meter')['style']['width'] = _0xdbf0xe + '%'
+  var percentage = Math['ceil'](window['loaded_resources'] / window['proc']);
+  document['getElementById']('progress')['innerHTML'] = percentage;
+  document['getElementById']('preloader_meter')['style']['width'] = percentage + '%'
 }
 
 function load_game_resources_final() {
@@ -146,42 +146,42 @@ function load_game() {
   VK['api']('friends.getAppUsers', {}, vk_app_friends)
 }
 
-function vk_app_friends(_0xdbf0x12) {
+function vk_app_friends(obj) {
   document['getElementById']('progress')['innerHTML'] = 85;
   document['getElementById']('current_step')['innerHTML'] = 'Проверка статуса дружбы';
   document['getElementById']('preloader_meter')['style']['width'] = '85%';
-  if (_0xdbf0x12['response']['length'] > 0) {
-    friends_parted(_0xdbf0x12['response'])
+  if (obj['response']['length'] > 0) {
+    friends_parted(obj['response'])
   } else {
     vk_signs_empty()
   }
 }
 
-function friends_parted(_0xdbf0x14) {
-  var _0xdbf0x15 = _0xdbf0x14['length'];
-  var _0xdbf0x6 = _0xdbf0x15 % 1000;
-  var _0xdbf0x16 = (_0xdbf0x15 - _0xdbf0x6) / 1000;
+function friends_parted(array) {
+  var length = array['length'];
+  var _0xdbf0x6 = length % 1000;
+  var _0xdbf0x16 = (length - _0xdbf0x6) / 1000;
   if (_0xdbf0x6 > 0) {
     _0xdbf0x16++
   };
   window['friends_parted'] = _0xdbf0x16;
   window['load_friends'] = 0;
   window['signs'] = {};
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x16; _0xdbf0x4++) {
-    var _0xdbf0x17 = _0xdbf0x14['slice'](_0xdbf0x4 * 1000, _0xdbf0x4 * 1000 + 1000);
+  for (var i = 0; i < _0xdbf0x16; i++) {
+    var ids = array['slice'](i * 1000, i * 1000 + 1000);
     VK['api']('friends.areFriends', {
-      "user_ids": _0xdbf0x17['join'](','),
+      "user_ids": ids['join'](','),
       need_sign: 1
     }, vk_signs)
   }
 }
 
-function vk_signs(_0xdbf0x12) {
+function vk_signs(obj) {
   document['getElementById']('progress')['innerHTML'] = 90;
   document['getElementById']('current_step')['innerHTML'] = 'Отправка сигнатур';
   document['getElementById']('preloader_meter')['style']['width'] = '90%';
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x12['response']['length']; _0xdbf0x4++) {
-    window['signs'][_0xdbf0x12['response'][_0xdbf0x4]['user_id']] = _0xdbf0x12['response'][_0xdbf0x4]['sign']
+  for (var i = 0; i < obj['response']['length']; i++) {
+    window['signs'][obj['response'][i]['user_id']] = obj['response'][i]['sign']
   };
   window['load_friends']++;
   if (window['load_friends'] == window['friends_parted']) {
@@ -193,59 +193,59 @@ function vk_signs_empty() {
   document['getElementById']('progress')['innerHTML'] = 90;
   document['getElementById']('current_step')['innerHTML'] = 'Отправка сигнатур';
   document['getElementById']('preloader_meter')['style']['width'] = '90%';
-  var _0xdbf0x1a = {};
-  server_query('init', 'friends=' + JSON['stringify'](_0xdbf0x1a), 'server_init')
+  var empty = {};
+  server_query('init', 'friends=' + JSON['stringify'](empty), 'server_init')
 }
 
-function server_query(_0xdbf0x1c, _0xdbf0x12, _0xdbf0x1d) {
+function server_query(action, _0xdbf0x12, methodToCall) {
   window['status_query'] = 1;
-  var _0xdbf0x1e = 'ts=' + get_current_timestamp();
+  var query = 'ts=' + get_current_timestamp();
   if (_0xdbf0x12 != '') {
-    _0xdbf0x1e += '&' + _0xdbf0x12
+    query += '&' + _0xdbf0x12
   };
-  var _0xdbf0x1f = random_int(1001, 9999);
-  while (_0xdbf0x1f == window['last_rnd']) {
-    _0xdbf0x1f = random_int(1001, 9999)
+  var random = random_int(1001, 9999);
+  while (random == window['last_rnd']) {
+    random = random_int(1001, 9999)
   };
-  window['last_rnd'] = _0xdbf0x1f;
-  _0xdbf0x1e += '&rnd=' + _0xdbf0x1f;
-  if (_0xdbf0x1c == 'init') {
-    var _0xdbf0x20 = md5(_0xdbf0x1e)
+  window['last_rnd'] = random;
+  query += '&rnd=' + random;
+  if (action == 'init') {
+    var signature = md5(query)
   } else {
-    var _0xdbf0x20 = md5(window['secret'] + _0xdbf0x1e + window['secret'])
+    var signature = md5(window['secret'] + query + window['secret'])
   };
-  _0xdbf0x1e += '&sign=' + _0xdbf0x20;
-  xhr_query(window['num']++, window['server'] + _0xdbf0x1c, _0xdbf0x1e, _0xdbf0x1d, 1, _0xdbf0x20)
+  query += '&sign=' + signature;
+  xhr_query(window['num']++, window['server'] + action, query, methodToCall, 1, signature)
 }
 
-function random_int(_0xdbf0x22, _0xdbf0x23) {
-  var _0xdbf0x24 = Math['round'](_0xdbf0x22 - 0.5 + Math['random']() * (_0xdbf0x23 - _0xdbf0x22 + 1));
-  return _0xdbf0x24
+function random_int(from, to) {
+  var value = Math['round'](from - 0.5 + Math['random']() * (to - from + 1));
+  return value
 }
 
-function xhr_query(_0xdbf0x26, _0xdbf0x27, _0xdbf0x12, _0xdbf0x1d, _0xdbf0x28, _0xdbf0x29) {
-  xhr[_0xdbf0x26] = new XMLHttpRequest();
-  xhr[_0xdbf0x26]['open']('POST', _0xdbf0x27, true);
-  xhr[_0xdbf0x26]['setRequestHeader']('Content-type', 'application/x-www-form-urlencoded');
+function xhr_query(index, url, query, methodToCall, _0xdbf0x28, signature) {
+  xhr[index] = new XMLHttpRequest();
+  xhr[index]['open']('POST', url, true);
+  xhr[index]['setRequestHeader']('Content-type', 'application/x-www-form-urlencoded');
   if (window['game_key'] && window['game_key']['length'] > 0) {
-    xhr[_0xdbf0x26]['setRequestHeader']('Game-key', window['game_key'])
+    xhr[index]['setRequestHeader']('Game-key', window['game_key'])
   };
-  xhr[_0xdbf0x26]['setRequestHeader']('Game-check', md5(_0xdbf0x29));
-  xhr[_0xdbf0x26]['onreadystatechange'] = function() {
-    if (xhr[_0xdbf0x26]['readyState'] == 4) {
-      if (xhr[_0xdbf0x26]['status'] == 200) {
+  xhr[index]['setRequestHeader']('Game-check', md5(signature));
+  xhr[index]['onreadystatechange'] = function() {
+    if (xhr[index]['readyState'] == 4) {
+      if (xhr[index]['status'] == 200) {
         window['status_query'] = 0;
-        var _0xdbf0x2a = JXG['decompress'](spec_decode(xhr[_0xdbf0x26]['responseText']));
+        var response = JXG['decompress'](spec_decode(xhr[index]['responseText']));
         if (_0xdbf0x28 == 1) {
-          _0xdbf0x2a = JSON['parse'](_0xdbf0x2a)
+          response = JSON['parse'](response)
         };
-        console['log']('answer:', _0xdbf0x2a);
-        if (_0xdbf0x2a['error']) {
-          modal_error(_0xdbf0x2a)
+        console['log']('answer:', response);
+        if (response['error']) {
+          modal_error(response)
         } else {
-          if (_0xdbf0x2a['result'] == 'ok') {
-            if (_0xdbf0x1d != '') {
-              window[_0xdbf0x1d](_0xdbf0x2a)
+          if (response['result'] == 'ok') {
+            if (methodToCall != '') {
+              window[methodToCall](response)
             }
           }
         }
@@ -257,14 +257,14 @@ function xhr_query(_0xdbf0x26, _0xdbf0x27, _0xdbf0x12, _0xdbf0x1d, _0xdbf0x28, _
       }
     }
   };
-  console['log']('query: ', _0xdbf0x12);
-  xhr[_0xdbf0x26]['send'](spec_encode(epl_compress(_0xdbf0x12)))
+  console['log']('query: ', query);
+  xhr[index]['send'](spec_encode(epl_compress(query)))
 }
 
-function spec_encode(_0xdbf0x1e) {
-  var _0xdbf0x2c = '';
-  var _0xdbf0x2d = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  var _0xdbf0x2e = {
+function spec_encode(str) {
+  var output = '';
+  var array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  var obj = {
     "a": 'b',
     "b": 'h',
     "c": 'k',
@@ -328,20 +328,20 @@ function spec_encode(_0xdbf0x1e) {
     "8": '3',
     "9": '9'
   };
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x1e['length']; _0xdbf0x4++) {
-    if (in_array(_0xdbf0x1e[_0xdbf0x4], _0xdbf0x2d)) {
-      _0xdbf0x2c += _0xdbf0x2e[_0xdbf0x1e[_0xdbf0x4]]
+  for (var i = 0; i < str['length']; i++) {
+    if (in_array(str[i], array)) {
+      output += obj[str[i]]
     } else {
-      _0xdbf0x2c += _0xdbf0x1e[_0xdbf0x4]
+      output += str[i]
     }
   };
-  return _0xdbf0x2c
+  return output
 }
 
-function spec_decode(_0xdbf0x1e) {
-  var _0xdbf0x2c = '';
-  var _0xdbf0x2d = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  var _0xdbf0x2e = {
+function spec_decode(str) {
+  var output = '';
+  var array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  var obj = {
     "b": 'a',
     "h": 'b',
     "k": 'c',
@@ -405,112 +405,112 @@ function spec_decode(_0xdbf0x1e) {
     "3": '8',
     "9": '9'
   };
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x1e['length']; _0xdbf0x4++) {
-    if (in_array(_0xdbf0x1e[_0xdbf0x4], _0xdbf0x2d)) {
-      _0xdbf0x2c += _0xdbf0x2e[_0xdbf0x1e[_0xdbf0x4]]
+  for (var i = 0; i < str['length']; i++) {
+    if (in_array(str[i], array)) {
+      output += obj[str[i]]
     } else {
-      _0xdbf0x2c += _0xdbf0x1e[_0xdbf0x4]
+      output += str[i]
     }
   };
-  return _0xdbf0x2c
+  return output
 }
 
-function epl_compress(_0xdbf0x12) {
-  var _0xdbf0x12 = encodeURIComponent(_0xdbf0x12);
-  var _0xdbf0x31 = pako['deflate'](_0xdbf0x12, {
+function epl_compress(strData) {
+  var strData = encodeURIComponent(strData);
+  var compressed = pako['deflate'](strData, {
     level: 9
   });
-  var _0xdbf0x32 = Base64['fromUint8Array'](_0xdbf0x31);
-  return _0xdbf0x32
+  var strOutput = Base64['fromUint8Array'](compressed);
+  return strOutput
 }
 
-function modal_error(_0xdbf0x12) {
-  var _0xdbf0x34 = ['supply', 'weapons'];
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x34['length']; _0xdbf0x4++) {
-    hide_modal(_0xdbf0x34[_0xdbf0x4] + '_block')
+function modal_error(obj) {
+  var arr = ['supply', 'weapons'];
+  for (var i = 0; i < arr['length']; i++) {
+    hide_modal(arr[i] + '_block')
   };
   hide_modal2(0);
   hide_loader();
   window['view_modal'] = 1;
-  if (_0xdbf0x12['descr'] == 'session expired') {
-    var _0xdbf0x35 = document['getElementsByClassName']('modal_error')[0];
-    _0xdbf0x35['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'В связи с длительным отсутствием активности с вашей стороны, игровая сессия была автоматически завершена. Пожалуйста, перезагрузите игру!';
-    _0xdbf0x35['style']['display'] = 'flex'
+  if (obj['descr'] == 'session expired') {
+    var modalError = document['getElementsByClassName']('modal_error')[0];
+    modalError['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'В связи с длительным отсутствием активности с вашей стороны, игровая сессия была автоматически завершена. Пожалуйста, перезагрузите игру!';
+    modalError['style']['display'] = 'flex'
   } else {
-    if (_0xdbf0x12['descr'] == 'failed authorization') {
-      var _0xdbf0x35 = document['getElementsByClassName']('modal_error')[0];
-      _0xdbf0x35['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'Ошибка авторизации. Скорее всего, игра запущена на другой вкладке или на другом устройстве. Нужно перезагрузить игру, чтобы продолжить';
-      _0xdbf0x35['style']['display'] = 'flex'
+    if (obj['descr'] == 'failed authorization') {
+      var modalError = document['getElementsByClassName']('modal_error')[0];
+      modalError['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'Ошибка авторизации. Скорее всего, игра запущена на другой вкладке или на другом устройстве. Нужно перезагрузить игру, чтобы продолжить';
+      modalError['style']['display'] = 'flex'
     } else {
-      if (_0xdbf0x12['descr'] == 'connection error') {
-        var _0xdbf0x35 = document['getElementsByClassName']('modal_error')[0];
-        _0xdbf0x35['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'Похоже, что-то не так. Пожалуйста, проверьте ваше Интернет-соединение и перезагрузите игру.';
-        _0xdbf0x35['style']['display'] = 'flex'
+      if (obj['descr'] == 'connection error') {
+        var modalError = document['getElementsByClassName']('modal_error')[0];
+        modalError['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'Похоже, что-то не так. Пожалуйста, проверьте ваше Интернет-соединение и перезагрузите игру.';
+        modalError['style']['display'] = 'flex'
       } else {
-        var _0xdbf0x35 = document['getElementsByClassName']('modal_error')[0];
-        _0xdbf0x35['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'Произошла неизвестная ошибка. Попробуйте перезагрузить игру. Если это не помогло, то сообщите Администрации';
-        _0xdbf0x35['style']['display'] = 'flex'
+        var modalError = document['getElementsByClassName']('modal_error')[0];
+        modalError['getElementsByClassName']('modal_error_text')[0]['innerHTML'] = 'Произошла неизвестная ошибка. Попробуйте перезагрузить игру. Если это не помогло, то сообщите Администрации';
+        modalError['style']['display'] = 'flex'
       }
     }
   };
-  var _0xdbf0x36 = document['getElementsByClassName']('modal_shadow')[0]['style'];
-  _0xdbf0x36['display'] = 'block';
-  _0xdbf0x36['height'] = '630px';
-  _0xdbf0x36['top'] = '0';
-  _0xdbf0x36['zIndex'] = '4'
+  var modalShadow = document['getElementsByClassName']('modal_shadow')[0]['style'];
+  modalShadow['display'] = 'block';
+  modalShadow['height'] = '630px';
+  modalShadow['top'] = '0';
+  modalShadow['zIndex'] = '4'
 }
 
-function server_init(_0xdbf0x12) {
-  if (_0xdbf0x12['secret']['length'] > 0) {
-    window['secret'] = _0xdbf0x12['secret']
+function server_init(obj) {
+  if (obj['secret']['length'] > 0) {
+    window['secret'] = obj['secret']
   };
-  if (_0xdbf0x12['key']['length'] > 0) {
-    window['game_key'] = _0xdbf0x12['key']
+  if (obj['key']['length'] > 0) {
+    window['game_key'] = obj['key']
   };
-  window['friends'] = _0xdbf0x12['friends'];
-  window['top_level'] = _0xdbf0x12['top_level'];
-  window['top_sut'] = _0xdbf0x12['top_sut'];
-  window['top_damage'] = _0xdbf0x12['top_damage'];
-  window['top_damage_old'] = _0xdbf0x12['top_damage_old'];
-  window['top_boss_0_friends'] = _0xdbf0x12['top_boss_0_friends'];
-  window['top_boss_1_friends'] = _0xdbf0x12['top_boss_1_friends'];
-  window['top_boss_2_friends'] = _0xdbf0x12['top_boss_2_friends'];
-  window['top_boss_3_friends'] = _0xdbf0x12['top_boss_3_friends'];
-  window['top_boss_4_friends'] = _0xdbf0x12['top_boss_4_friends'];
-  window['top_boss_5_friends'] = _0xdbf0x12['top_boss_5_friends'];
-  window['top_boss_6_friends'] = _0xdbf0x12['top_boss_6_friends'];
-  window['top_boss_7_friends'] = _0xdbf0x12['top_boss_7_friends'];
-  window['top_boss_8_friends'] = _0xdbf0x12['top_boss_8_friends'];
-  window['top_boss_9_friends'] = _0xdbf0x12['top_boss_9_friends'];
-  window['top_boss_14_friends'] = _0xdbf0x12['top_boss_14_friends'];
-  window['top_boss_15_friends'] = _0xdbf0x12['top_boss_15_friends'];
-  window['top_boss_0'] = _0xdbf0x12['top_boss_0'];
-  window['top_boss_1'] = _0xdbf0x12['top_boss_1'];
-  window['top_boss_2'] = _0xdbf0x12['top_boss_2'];
-  window['top_boss_3'] = _0xdbf0x12['top_boss_3'];
-  window['top_boss_4'] = _0xdbf0x12['top_boss_4'];
-  window['top_boss_5'] = _0xdbf0x12['top_boss_5'];
-  window['top_boss_6'] = _0xdbf0x12['top_boss_6'];
-  window['top_boss_7'] = _0xdbf0x12['top_boss_7'];
-  window['top_boss_8'] = _0xdbf0x12['top_boss_8'];
-  window['top_boss_9'] = _0xdbf0x12['top_boss_9'];
-  window['top_boss_14'] = _0xdbf0x12['top_boss_14'];
-  window['top_boss_15'] = _0xdbf0x12['top_boss_15'];
-  window['top_boss_0_old'] = _0xdbf0x12['top_boss_0_old'];
-  window['top_boss_1_old'] = _0xdbf0x12['top_boss_1_old'];
-  window['top_boss_2_old'] = _0xdbf0x12['top_boss_2_old'];
-  window['top_boss_3_old'] = _0xdbf0x12['top_boss_3_old'];
-  window['top_boss_4_old'] = _0xdbf0x12['top_boss_4_old'];
-  window['top_boss_5_old'] = _0xdbf0x12['top_boss_5_old'];
-  window['top_boss_6_old'] = _0xdbf0x12['top_boss_6_old'];
-  window['top_boss_7_old'] = _0xdbf0x12['top_boss_7_old'];
-  window['top_boss_8_old'] = _0xdbf0x12['top_boss_8_old'];
-  window['top_boss_9_old'] = _0xdbf0x12['top_boss_9_old'];
-  window['top_boss_14_old'] = _0xdbf0x12['top_boss_14_old'];
-  window['top_boss_15_old'] = _0xdbf0x12['top_boss_15_old'];
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < 4; _0xdbf0x4++) {
-    for (var _0xdbf0x38 = 0; _0xdbf0x38 < 7; _0xdbf0x38++) {
-      window['top_mission_' + _0xdbf0x4 + '_' + _0xdbf0x38 + '_friends'] = _0xdbf0x12['top_mission_' + _0xdbf0x4 + '_' + _0xdbf0x38 + '_friends']
+  window['friends'] = obj['friends'];
+  window['top_level'] = obj['top_level'];
+  window['top_sut'] = obj['top_sut'];
+  window['top_damage'] = obj['top_damage'];
+  window['top_damage_old'] = obj['top_damage_old'];
+  window['top_boss_0_friends'] = obj['top_boss_0_friends'];
+  window['top_boss_1_friends'] = obj['top_boss_1_friends'];
+  window['top_boss_2_friends'] = obj['top_boss_2_friends'];
+  window['top_boss_3_friends'] = obj['top_boss_3_friends'];
+  window['top_boss_4_friends'] = obj['top_boss_4_friends'];
+  window['top_boss_5_friends'] = obj['top_boss_5_friends'];
+  window['top_boss_6_friends'] = obj['top_boss_6_friends'];
+  window['top_boss_7_friends'] = obj['top_boss_7_friends'];
+  window['top_boss_8_friends'] = obj['top_boss_8_friends'];
+  window['top_boss_9_friends'] = obj['top_boss_9_friends'];
+  window['top_boss_14_friends'] = obj['top_boss_14_friends'];
+  window['top_boss_15_friends'] = obj['top_boss_15_friends'];
+  window['top_boss_0'] = obj['top_boss_0'];
+  window['top_boss_1'] = obj['top_boss_1'];
+  window['top_boss_2'] = obj['top_boss_2'];
+  window['top_boss_3'] = obj['top_boss_3'];
+  window['top_boss_4'] = obj['top_boss_4'];
+  window['top_boss_5'] = obj['top_boss_5'];
+  window['top_boss_6'] = obj['top_boss_6'];
+  window['top_boss_7'] = obj['top_boss_7'];
+  window['top_boss_8'] = obj['top_boss_8'];
+  window['top_boss_9'] = obj['top_boss_9'];
+  window['top_boss_14'] = obj['top_boss_14'];
+  window['top_boss_15'] = obj['top_boss_15'];
+  window['top_boss_0_old'] = obj['top_boss_0_old'];
+  window['top_boss_1_old'] = obj['top_boss_1_old'];
+  window['top_boss_2_old'] = obj['top_boss_2_old'];
+  window['top_boss_3_old'] = obj['top_boss_3_old'];
+  window['top_boss_4_old'] = obj['top_boss_4_old'];
+  window['top_boss_5_old'] = obj['top_boss_5_old'];
+  window['top_boss_6_old'] = obj['top_boss_6_old'];
+  window['top_boss_7_old'] = obj['top_boss_7_old'];
+  window['top_boss_8_old'] = obj['top_boss_8_old'];
+  window['top_boss_9_old'] = obj['top_boss_9_old'];
+  window['top_boss_14_old'] = obj['top_boss_14_old'];
+  window['top_boss_15_old'] = obj['top_boss_15_old'];
+  for (var i = 0; i < 4; i++) {
+    for (var j = 0; j < 7; j++) {
+      window['top_mission_' + i + '_' + j + '_friends'] = obj['top_mission_' + i + '_' + j + '_friends']
     }
   };
   change_friends_mode(0);
@@ -524,123 +524,123 @@ function server_init(_0xdbf0x12) {
   server_query('get', '', 'server_get')
 }
 
-function friends_vk_load_window(_0xdbf0x12) {
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-    for (var _0xdbf0x38 = 0; _0xdbf0x38 < _0xdbf0x12['response']['length']; _0xdbf0x38++) {
-      if (_0xdbf0x12['response'][_0xdbf0x38]['id'] == window['friends'][_0xdbf0x4]['id']) {
-        window['friends'][_0xdbf0x4]['profile'] = {};
-        window['friends'][_0xdbf0x4]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x38]['first_name'];
-        window['friends'][_0xdbf0x4]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x38]['last_name'];
-        window['friends'][_0xdbf0x4]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x38]['photo_50'];
-        window['friends'][_0xdbf0x4]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x38]['sex']
+function friends_vk_load_window(obj) {
+  for (var i = 0; i < window['friends']['length']; i++) {
+    for (var j = 0; j < obj['response']['length']; j++) {
+      if (obj['response'][j]['id'] == window['friends'][i]['id']) {
+        window['friends'][i]['profile'] = {};
+        window['friends'][i]['profile']['first_name'] = obj['response'][j]['first_name'];
+        window['friends'][i]['profile']['last_name'] = obj['response'][j]['last_name'];
+        window['friends'][i]['profile']['photo_50'] = obj['response'][j]['photo_50'];
+        window['friends'][i]['profile']['sex'] = obj['response'][j]['sex']
       }
     }
   }
 }
 
-function friends_vk_load_otwindow(_0xdbf0x12) {
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-    for (var _0xdbf0x38 = 0; _0xdbf0x38 < _0xdbf0x12['response']['length']; _0xdbf0x38++) {
-      if (_0xdbf0x12['response'][_0xdbf0x38]['id'] == window['friends'][_0xdbf0x4]['id']) {
-        window['friends'][_0xdbf0x4]['profile'] = {};
-        window['friends'][_0xdbf0x4]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x38]['first_name'];
-        window['friends'][_0xdbf0x4]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x38]['last_name'];
-        window['friends'][_0xdbf0x4]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x38]['photo_50'];
-        window['friends'][_0xdbf0x4]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x38]['sex'];
-        _0xdbf0x12['response'][_0xdbf0x38]['is_friend'] = 1
+function friends_vk_load_otwindow(obj) {
+  for (var i = 0; i < window['friends']['length']; i++) {
+    for (var j = 0; j < obj['response']['length']; j++) {
+      if (obj['response'][j]['id'] == window['friends'][i]['id']) {
+        window['friends'][i]['profile'] = {};
+        window['friends'][i]['profile']['first_name'] = obj['response'][j]['first_name'];
+        window['friends'][i]['profile']['last_name'] = obj['response'][j]['last_name'];
+        window['friends'][i]['profile']['photo_50'] = obj['response'][j]['photo_50'];
+        window['friends'][i]['profile']['sex'] = obj['response'][j]['sex'];
+        obj['response'][j]['is_friend'] = 1
       }
     }
   };
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['other_friends']['length']; _0xdbf0x4++) {
-    for (var _0xdbf0x38 = 0; _0xdbf0x38 < _0xdbf0x12['response']['length']; _0xdbf0x38++) {
-      if (_0xdbf0x12['response'][_0xdbf0x38]['is_friend'] != 1 && _0xdbf0x12['response'][_0xdbf0x38]['id'] == window['other_friends'][_0xdbf0x4]['id']) {
-        window['other_friends'][_0xdbf0x4]['profile'] = {};
-        window['other_friends'][_0xdbf0x4]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x38]['first_name'];
-        window['other_friends'][_0xdbf0x4]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x38]['last_name'];
-        window['other_friends'][_0xdbf0x4]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x38]['photo_50'];
-        window['other_friends'][_0xdbf0x4]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x38]['sex']
+  for (var i = 0; i < window['other_friends']['length']; i++) {
+    for (var j = 0; j < obj['response']['length']; j++) {
+      if (obj['response'][j]['is_friend'] != 1 && obj['response'][j]['id'] == window['other_friends'][i]['id']) {
+        window['other_friends'][i]['profile'] = {};
+        window['other_friends'][i]['profile']['first_name'] = obj['response'][j]['first_name'];
+        window['other_friends'][i]['profile']['last_name'] = obj['response'][j]['last_name'];
+        window['other_friends'][i]['profile']['photo_50'] = obj['response'][j]['photo_50'];
+        window['other_friends'][i]['profile']['sex'] = obj['response'][j]['sex']
       }
     }
   }
 }
 
-function friends_vk_load(_0xdbf0x12) {
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x12['response']['length']; _0xdbf0x4++) {
-    for (var _0xdbf0x38 = 1; _0xdbf0x38 <= 10; _0xdbf0x38++) {
-      var _0xdbf0x3c = document['getElementById']('friend' + _0xdbf0x38);
-      if (_0xdbf0x3c['dataset']['id'] == _0xdbf0x12['response'][_0xdbf0x4]['id']) {
-        window['friends'][_0xdbf0x3c['dataset']['iinlist']]['profile'] = {};
-        window['friends'][_0xdbf0x3c['dataset']['iinlist']]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        window['friends'][_0xdbf0x3c['dataset']['iinlist']]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-        window['friends'][_0xdbf0x3c['dataset']['iinlist']]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-        window['friends'][_0xdbf0x3c['dataset']['iinlist']]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
-        var _0xdbf0x3d = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        if (_0xdbf0x3d['length'] > 7) {
-          _0xdbf0x3d = _0xdbf0x3d['substr'](0, 7);
-          _0xdbf0x3d += '...'
+function friends_vk_load(obj) {
+  for (var i = 0; i < obj['response']['length']; i++) {
+    for (var j = 1; j <= 10; j++) {
+      var friendElement = document['getElementById']('friend' + j);
+      if (friendElement['dataset']['id'] == obj['response'][i]['id']) {
+        window['friends'][friendElement['dataset']['iinlist']]['profile'] = {};
+        window['friends'][friendElement['dataset']['iinlist']]['profile']['first_name'] = obj['response'][i]['first_name'];
+        window['friends'][friendElement['dataset']['iinlist']]['profile']['last_name'] = obj['response'][i]['last_name'];
+        window['friends'][friendElement['dataset']['iinlist']]['profile']['photo_50'] = obj['response'][i]['photo_50'];
+        window['friends'][friendElement['dataset']['iinlist']]['profile']['sex'] = obj['response'][i]['sex'];
+        var firstName = obj['response'][i]['first_name'];
+        if (firstName['length'] > 7) {
+          firstName = firstName['substr'](0, 7);
+          firstName += '...'
         };
-        _0xdbf0x3c['getElementsByClassName']('friend_name')[0]['innerHTML'] = _0xdbf0x3d;
-        var _0xdbf0x3e = _0xdbf0x3c['getElementsByClassName']('friend_avatar')[0];
-        if (_0xdbf0x3e['dataset']['iavatar'] == 1) {
-          _0xdbf0x3e['getElementsByTagName']('img')[0]['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50']
+        friendElement['getElementsByClassName']('friend_name')[0]['innerHTML'] = firstName;
+        var avatarElement = friendElement['getElementsByClassName']('friend_avatar')[0];
+        if (avatarElement['dataset']['iavatar'] == 1) {
+          avatarElement['getElementsByTagName']('img')[0]['src'] = obj['response'][i]['photo_50']
         } else {
-          var _0xdbf0x3f = document['createElement']('img');
-          _0xdbf0x3f['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-          _0xdbf0x3e['appendChild'](_0xdbf0x3f);
-          _0xdbf0x3e['dataset']['iavatar'] = 1
+          var img = document['createElement']('img');
+          img['src'] = obj['response'][i]['photo_50'];
+          avatarElement['appendChild'](img);
+          avatarElement['dataset']['iavatar'] = 1
         }
       }
     }
   }
 }
 
-function friends_vk_load2(_0xdbf0x12) {
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x12['response']['length']; _0xdbf0x4++) {
+function friends_vk_load2(obj) {
+  for (var _0xdbf0x4 = 0; _0xdbf0x4 < obj['response']['length']; _0xdbf0x4++) {
     for (var _0xdbf0x38 = 1; _0xdbf0x38 <= 10; _0xdbf0x38++) {
-      var _0xdbf0x3c = document['getElementById']('friend' + _0xdbf0x38);
-      if (_0xdbf0x3c['dataset']['id'] == _0xdbf0x12['response'][_0xdbf0x4]['id']) {
-        window['top_level'][_0xdbf0x3c['dataset']['iinlist']]['profile'] = {};
-        window['top_level'][_0xdbf0x3c['dataset']['iinlist']]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        window['top_level'][_0xdbf0x3c['dataset']['iinlist']]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-        window['top_level'][_0xdbf0x3c['dataset']['iinlist']]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-        window['top_level'][_0xdbf0x3c['dataset']['iinlist']]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
-        var _0xdbf0x3d = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        if (_0xdbf0x3d['length'] > 7) {
-          _0xdbf0x3d = _0xdbf0x3d['substr'](0, 7);
-          _0xdbf0x3d += '...'
+      var friendElement = document['getElementById']('friend' + _0xdbf0x38);
+      if (friendElement['dataset']['id'] == obj['response'][_0xdbf0x4]['id']) {
+        window['top_level'][friendElement['dataset']['iinlist']]['profile'] = {};
+        window['top_level'][friendElement['dataset']['iinlist']]['profile']['first_name'] = obj['response'][_0xdbf0x4]['first_name'];
+        window['top_level'][friendElement['dataset']['iinlist']]['profile']['last_name'] = obj['response'][_0xdbf0x4]['last_name'];
+        window['top_level'][friendElement['dataset']['iinlist']]['profile']['photo_50'] = obj['response'][_0xdbf0x4]['photo_50'];
+        window['top_level'][friendElement['dataset']['iinlist']]['profile']['sex'] = obj['response'][_0xdbf0x4]['sex'];
+        var firstName = obj['response'][_0xdbf0x4]['first_name'];
+        if (firstName['length'] > 7) {
+          firstName = firstName['substr'](0, 7);
+          firstName += '...'
         };
-        _0xdbf0x3c['getElementsByClassName']('friend_name')[0]['innerHTML'] = _0xdbf0x3d;
-        var _0xdbf0x3e = _0xdbf0x3c['getElementsByClassName']('friend_avatar')[0];
-        if (_0xdbf0x3e['dataset']['iavatar'] == 1) {
-          _0xdbf0x3e['getElementsByTagName']('img')[0]['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50']
+        friendElement['getElementsByClassName']('friend_name')[0]['innerHTML'] = firstName;
+        var friendAvatar = friendElement['getElementsByClassName']('friend_avatar')[0];
+        if (friendAvatar['dataset']['iavatar'] == 1) {
+          friendAvatar['getElementsByTagName']('img')[0]['src'] = obj['response'][_0xdbf0x4]['photo_50']
         } else {
-          var _0xdbf0x3f = document['createElement']('img');
-          _0xdbf0x3f['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-          _0xdbf0x3e['appendChild'](_0xdbf0x3f);
-          _0xdbf0x3e['dataset']['iavatar'] = 1
+          var img = document['createElement']('img');
+          img['src'] = obj['response'][_0xdbf0x4]['photo_50'];
+          friendAvatar['appendChild'](img);
+          friendAvatar['dataset']['iavatar'] = 1
         }
       }
     };
     var in_array = 0;
     for (var _0xdbf0x38 = 0; _0xdbf0x38 < window['other_friends']['length']; _0xdbf0x38++) {
-      if (window['other_friends'][_0xdbf0x38]['id'] == _0xdbf0x12['response'][_0xdbf0x4]['id']) {
+      if (window['other_friends'][_0xdbf0x38]['id'] == obj['response'][_0xdbf0x4]['id']) {
         in_array = 1;
         window['other_friends'][_0xdbf0x38]['profile'] = {};
-        window['other_friends'][_0xdbf0x38]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        window['other_friends'][_0xdbf0x38]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-        window['other_friends'][_0xdbf0x38]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-        window['other_friends'][_0xdbf0x38]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex']
+        window['other_friends'][_0xdbf0x38]['profile']['first_name'] = obj['response'][_0xdbf0x4]['first_name'];
+        window['other_friends'][_0xdbf0x38]['profile']['last_name'] = obj['response'][_0xdbf0x4]['last_name'];
+        window['other_friends'][_0xdbf0x38]['profile']['photo_50'] = obj['response'][_0xdbf0x4]['photo_50'];
+        window['other_friends'][_0xdbf0x38]['profile']['sex'] = obj['response'][_0xdbf0x4]['sex']
       }
     };
     if (in_array == 0) {
-      var _0xdbf0x42 = {};
-      _0xdbf0x42['id'] = _0xdbf0x12['response'][_0xdbf0x4]['id'];
-      _0xdbf0x42['profile'] = {};
-      _0xdbf0x42['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-      _0xdbf0x42['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-      _0xdbf0x42['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-      _0xdbf0x42['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
-      window['other_friends']['push'](_0xdbf0x42)
+      var friend = {};
+      friend['id'] = obj['response'][_0xdbf0x4]['id'];
+      friend['profile'] = {};
+      friend['profile']['first_name'] = obj['response'][_0xdbf0x4]['first_name'];
+      friend['profile']['last_name'] = obj['response'][_0xdbf0x4]['last_name'];
+      friend['profile']['photo_50'] = obj['response'][_0xdbf0x4]['photo_50'];
+      friend['profile']['sex'] = obj['response'][_0xdbf0x4]['sex'];
+      window['other_friends']['push'](friend)
     }
   }
 }
@@ -648,27 +648,27 @@ function friends_vk_load2(_0xdbf0x12) {
 function friends_vk_load3(_0xdbf0x12) {
   for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x12['response']['length']; _0xdbf0x4++) {
     for (var _0xdbf0x38 = 1; _0xdbf0x38 <= 10; _0xdbf0x38++) {
-      var _0xdbf0x3c = document['getElementById']('friend' + _0xdbf0x38);
-      if (_0xdbf0x3c['dataset']['id'] == _0xdbf0x12['response'][_0xdbf0x4]['id']) {
-        window['top_sut'][_0xdbf0x3c['dataset']['iinlist']]['profile'] = {};
-        window['top_sut'][_0xdbf0x3c['dataset']['iinlist']]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        window['top_sut'][_0xdbf0x3c['dataset']['iinlist']]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-        window['top_sut'][_0xdbf0x3c['dataset']['iinlist']]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-        window['top_sut'][_0xdbf0x3c['dataset']['iinlist']]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
-        var _0xdbf0x3d = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-        if (_0xdbf0x3d['length'] > 7) {
-          _0xdbf0x3d = _0xdbf0x3d['substr'](0, 7);
-          _0xdbf0x3d += '...'
+      var friendElement = document['getElementById']('friend' + _0xdbf0x38);
+      if (friendElement['dataset']['id'] == _0xdbf0x12['response'][_0xdbf0x4]['id']) {
+        window['top_sut'][friendElement['dataset']['iinlist']]['profile'] = {};
+        window['top_sut'][friendElement['dataset']['iinlist']]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
+        window['top_sut'][friendElement['dataset']['iinlist']]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
+        window['top_sut'][friendElement['dataset']['iinlist']]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
+        window['top_sut'][friendElement['dataset']['iinlist']]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
+        var firstName = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
+        if (firstName['length'] > 7) {
+          firstName = firstName['substr'](0, 7);
+          firstName += '...'
         };
-        _0xdbf0x3c['getElementsByClassName']('friend_name')[0]['innerHTML'] = _0xdbf0x3d;
-        var _0xdbf0x3e = _0xdbf0x3c['getElementsByClassName']('friend_avatar')[0];
-        if (_0xdbf0x3e['dataset']['iavatar'] == 1) {
-          _0xdbf0x3e['getElementsByTagName']('img')[0]['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50']
+        friendElement['getElementsByClassName']('friend_name')[0]['innerHTML'] = firstName;
+        var friendAvatar = friendElement['getElementsByClassName']('friend_avatar')[0];
+        if (friendAvatar['dataset']['iavatar'] == 1) {
+          friendAvatar['getElementsByTagName']('img')[0]['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50']
         } else {
-          var _0xdbf0x3f = document['createElement']('img');
-          _0xdbf0x3f['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-          _0xdbf0x3e['appendChild'](_0xdbf0x3f);
-          _0xdbf0x3e['dataset']['iavatar'] = 1
+          var img = document['createElement']('img');
+          img['src'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
+          friendAvatar['appendChild'](img);
+          friendAvatar['dataset']['iavatar'] = 1
         }
       }
     };
@@ -684,62 +684,62 @@ function friends_vk_load3(_0xdbf0x12) {
       }
     };
     if (in_array == 0) {
-      var _0xdbf0x42 = {};
-      _0xdbf0x42['id'] = _0xdbf0x12['response'][_0xdbf0x4]['id'];
-      _0xdbf0x42['profile'] = {};
-      _0xdbf0x42['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-      _0xdbf0x42['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-      _0xdbf0x42['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-      _0xdbf0x42['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
-      window['other_friends']['push'](_0xdbf0x42)
+      var friend = {};
+      friend['id'] = _0xdbf0x12['response'][_0xdbf0x4]['id'];
+      friend['profile'] = {};
+      friend['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
+      friend['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
+      friend['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
+      friend['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex'];
+      window['other_friends']['push'](friend)
     }
   }
 }
 
-function vk_load_my_profile(_0xdbf0x12) {
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-    if (window['friends'][_0xdbf0x4]['id'] == window['game_login']) {
-      window['iinlist'] = _0xdbf0x4
+function vk_load_my_profile(obj) {
+  for (var i = 0; i < window['friends']['length']; i++) {
+    if (window['friends'][i]['id'] == window['game_login']) {
+      window['iinlist'] = i
     }
   };
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x12['response']['length']; _0xdbf0x4++) {
-    if (_0xdbf0x12['response'][_0xdbf0x4]['id'] == window['game_login']) {
+  for (var i = 0; i < obj['response']['length']; i++) {
+    if (obj['response'][i]['id'] == window['game_login']) {
       window['friends'][window['iinlist']]['profile'] = {};
-      window['friends'][window['iinlist']]['profile']['first_name'] = _0xdbf0x12['response'][_0xdbf0x4]['first_name'];
-      window['friends'][window['iinlist']]['profile']['last_name'] = _0xdbf0x12['response'][_0xdbf0x4]['last_name'];
-      window['friends'][window['iinlist']]['profile']['photo_50'] = _0xdbf0x12['response'][_0xdbf0x4]['photo_50'];
-      window['friends'][window['iinlist']]['profile']['sex'] = _0xdbf0x12['response'][_0xdbf0x4]['sex']
+      window['friends'][window['iinlist']]['profile']['first_name'] = obj['response'][i]['first_name'];
+      window['friends'][window['iinlist']]['profile']['last_name'] = obj['response'][i]['last_name'];
+      window['friends'][window['iinlist']]['profile']['photo_50'] = obj['response'][i]['photo_50'];
+      window['friends'][window['iinlist']]['profile']['sex'] = obj['response'][i]['sex']
     }
   }
 }
 
-function server_action_fast(_0xdbf0x1c, _0xdbf0x46, _0xdbf0x1d) {
+function server_action_fast(method, params, methodToCall) {
   if (window['status_query'] == 0) {
     window['requests']['push']({
-      "method": _0xdbf0x1c,
-      "params": _0xdbf0x46
+      "method": method,
+      "params": params
     });
     if (window['xhr_timer'] !== null) {
       clearTimeout(window['xhr_timer']);
       window['xhr_timer'] = null
     };
-    send_server_action(_0xdbf0x1d)
+    send_server_action(methodToCall)
   } else {
-    setTimeout(server_action_fast, 250, _0xdbf0x1c, _0xdbf0x46, _0xdbf0x1d)
+    setTimeout(server_action_fast, 250, method, params, methodToCall)
   }
 }
 
-function server_action(_0xdbf0x1c, _0xdbf0x46) {
+function server_action(method, params) {
   if (window['status_query'] == 0) {
     window['requests']['push']({
-      "method": _0xdbf0x1c,
-      "params": _0xdbf0x46
+      "method": method,
+      "params": params
     });
     if (window['xhr_timer'] === null) {
       window['xhr_timer'] = setTimeout2(send_server_action2, 2000)
     }
   } else {
-    setTimeout(server_action, 250, _0xdbf0x1c, _0xdbf0x46)
+    setTimeout(server_action, 250, method, params)
   }
 }
 
@@ -779,8 +779,8 @@ function update_raid_health() {
   _0xdbf0x36['getElementsByClassName']('boss_fight_foe_line_health_current')[0]['style']['width'] = _0xdbf0x4c + '%'
 }
 
-function send_server_action(_0xdbf0x1d) {
-  server_query('action', 'requests=' + JSON['stringify'](window['requests']), _0xdbf0x1d);
+function send_server_action(methodToCall) {
+  server_query('action', 'requests=' + JSON['stringify'](window['requests']), methodToCall);
   window['requests'] = [];
   clearTimeout(window['xhr_timer']);
   window['xhr_timer'] = null
@@ -795,82 +795,82 @@ function send_server_action2() {
   window['xhr_timer'] = null
 }
 
-function in_array(_0xdbf0x4f, _0xdbf0x50) {
-  var _0xdbf0x32 = false;
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x50['length']; _0xdbf0x4++) {
-    if (_0xdbf0x50[_0xdbf0x4] == _0xdbf0x4f) {
-      _0xdbf0x32 = true
+function in_array(element, array) {
+  var exists = false;
+  for (var i = 0; i < array['length']; i++) {
+    if (array[i] == element) {
+      exists = true
     }
   };
-  return _0xdbf0x32
+  return exists
 }
 
 function show_modal_new_level() {
-  var _0xdbf0x52 = 200;
-  for (var _0xdbf0x4 = 3; _0xdbf0x4 <= window['player']['static_resources']['level']; _0xdbf0x4++) {
-    var _0xdbf0x53 = Math['ceil'](_0xdbf0x4 * 2.5);
-    _0xdbf0x52 += _0xdbf0x53
+  var a = 200;
+  for (var i = 3; i <= window['player']['static_resources']['level']; i++) {
+    var b = Math['ceil'](i * 2.5);
+    a += b
   };
-  var _0xdbf0x54 = _0xdbf0x52;
+  var c = a;
   if (window['player']['static_resources']['tutorial'] == 24) {
     document['getElementById']('level_up')['innerHTML'] = window['player']['static_resources']['level'];
     document['getElementsByClassName']('modal_shadow')[0]['style']['display'] = 'block';
-    var _0xdbf0x35 = document['getElementById']('modal');
-    _0xdbf0x35['style']['display'] = 'block';
-    window['tmp_fnc'] = _0xdbf0x35['getElementsByClassName']('modal_close')[0]['onclick'];
-    _0xdbf0x35['getElementsByClassName']('modal_close')[0]['onclick'] = hide_modal_new_level;
-    var _0xdbf0x55 = _0xdbf0x35['getElementsByClassName']('modal_item');
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x55['length']; _0xdbf0x4++) {
-      if (_0xdbf0x55[_0xdbf0x4]['style']['display'] == 'block') {
-        _0xdbf0x55[_0xdbf0x4]['dataset']['width'] = _0xdbf0x35['style']['width'];
-        _0xdbf0x55[_0xdbf0x4]['dataset']['left'] = _0xdbf0x35['style']['left'];
-        _0xdbf0x55[_0xdbf0x4]['style']['display'] = 'none';
-        _0xdbf0x55[_0xdbf0x4]['dataset']['opened'] = 1
+    var modalElement = document['getElementById']('modal');
+    modalElement['style']['display'] = 'block';
+    window['tmp_fnc'] = modalElement['getElementsByClassName']('modal_close')[0]['onclick'];
+    modalElement['getElementsByClassName']('modal_close')[0]['onclick'] = hide_modal_new_level;
+    var modalItems = modalElement['getElementsByClassName']('modal_item');
+    for (var i = 0; i < modalItems['length']; i++) {
+      if (modalItems[i]['style']['display'] == 'block') {
+        modalItems[i]['dataset']['width'] = modalElement['style']['width'];
+        modalItems[i]['dataset']['left'] = modalElement['style']['left'];
+        modalItems[i]['style']['display'] = 'none';
+        modalItems[i]['dataset']['opened'] = 1
       }
     };
-    _0xdbf0x35['style']['width'] = 450 + 'px';
-    _0xdbf0x35['style']['left'] = ((1000 - 450) / 2) + 'px';
-    var _0xdbf0x36 = _0xdbf0x35['getElementsByClassName']('level_block')[0];
-    var _0xdbf0x56 = _0xdbf0x36['getElementsByClassName']('level_up_award_item');
-    _0xdbf0x56[1]['getElementsByClassName']('level_up_award_item_count')[0]['innerHTML'] = 'x' + _0xdbf0x54;
-    var _0xdbf0x57 = document['getElementById']('level_up_share');
+    modalElement['style']['width'] = 450 + 'px';
+    modalElement['style']['left'] = ((1000 - 450) / 2) + 'px';
+    var levelBlock = modalElement['getElementsByClassName']('level_block')[0];
+    var awardElement = levelBlock['getElementsByClassName']('level_up_award_item');
+    awardElement[1]['getElementsByClassName']('level_up_award_item_count')[0]['innerHTML'] = 'x' + c;
+    var checkbox = document['getElementById']('level_up_share');
     if (window['player']['settings']['share_level'] == 1) {
-      _0xdbf0x57['checked'] = true
+      checkbox['checked'] = true
     } else {
-      _0xdbf0x57['checked'] = false
+      checkbox['checked'] = false
     };
-    _0xdbf0x57['onchange'] = function() {
+    checkbox['onchange'] = function() {
       change_share('level')
     };
-    _0xdbf0x36['style']['display'] = 'block';
-    _0xdbf0x36['getElementsByClassName']('level_up_get_button')[0]['onclick'] = function() {
-      get_reward_new_level(_0xdbf0x54)
+    levelBlock['style']['display'] = 'block';
+    levelBlock['getElementsByClassName']('level_up_get_button')[0]['onclick'] = function() {
+      get_reward_new_level(c)
     }
   } else {
-    setTimeout(get_reward_new_level, 3000, _0xdbf0x54)
+    setTimeout(get_reward_new_level, 3000, c)
   }
 }
 
-function get_reward_new_level(_0xdbf0x54) {
+function get_reward_new_level(coins) {
   window['player']['boxes']['push']({
     "id": window['player']['static_resources']['boxes_id']++,
     "open_time": get_current_timestamp(),
     "type": 3
   });
-  window['player']['static_resources']['coins'] += _0xdbf0x54;
-  window['player']['achievements']['coins'] += _0xdbf0x54;
+  window['player']['static_resources']['coins'] += coins;
+  window['player']['achievements']['coins'] += coins;
   update_static_resources_coins();
   var _0xdbf0x59 = renewable_resources(window['player']['renewable_resources']['supply']['time'], window['player']['renewable_resources']['supply']['amount'], window['player']['static_resources']['boost_max_supply'], window['player']['static_resources']['boost_speed_recovery_supply']);
   _0xdbf0x59 += 100;
   window['player']['renewable_resources']['supply']['amount'] = _0xdbf0x59;
   window['player']['renewable_resources']['supply']['time'] = get_current_timestamp();
   update_renewable_resources_supply();
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['calendar_tasks'][window['system']['moth']][window['system']['day']]['length']; _0xdbf0x4++) {
-    if (window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x4]['type'] == 'get_coins') {
-      window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x4] += _0xdbf0x54;
-      if (window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x4] >= window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x4]['count'] && window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x4]['done'] != 1) {
-        window['player']['static_resources']['stamp'] += window['calendar_stamp'][_0xdbf0x4];
-        window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x4]['done'] = 1
+  for (var i = 0; i < window['calendar_tasks'][window['system']['moth']][window['system']['day']]['length']; i++) {
+    if (window['calendar_tasks'][window['system']['moth']][window['system']['day']][i]['type'] == 'get_coins') {
+      window['player']['calendar'][window['system']['moth']][window['system']['day']][i] += coins;
+      if (window['player']['calendar'][window['system']['moth']][window['system']['day']][i] >= window['calendar_tasks'][window['system']['moth']][window['system']['day']][i]['count'] && window['calendar_tasks'][window['system']['moth']][window['system']['day']][i]['done'] != 1) {
+        window['player']['static_resources']['stamp'] += window['calendar_stamp'][i];
+        window['calendar_tasks'][window['system']['moth']][window['system']['day']][i]['done'] = 1
       }
     }
   };
@@ -886,20 +886,20 @@ function get_reward_new_level(_0xdbf0x54) {
 function hide_modal_new_level() {
   play_effect('click.mp3');
   document['getElementsByClassName']('level_block')[0]['style']['display'] = 'none';
-  var _0xdbf0x35 = document['getElementById']('modal');
-  var _0xdbf0x55 = _0xdbf0x35['getElementsByClassName']('modal_item');
-  var _0xdbf0x5b = 0;
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x55['length']; _0xdbf0x4++) {
-    if (_0xdbf0x55[_0xdbf0x4]['dataset']['opened'] == '1') {
-      _0xdbf0x55[_0xdbf0x4]['dataset']['opened'] = '0';
-      _0xdbf0x55[_0xdbf0x4]['style']['display'] = 'block';
-      _0xdbf0x35['style']['width'] = _0xdbf0x55[_0xdbf0x4]['dataset']['width'];
-      _0xdbf0x35['style']['left'] = _0xdbf0x55[_0xdbf0x4]['dataset']['left'];
-      _0xdbf0x5b = 1
+  var modalElement = document['getElementById']('modal');
+  var modalItem = modalElement['getElementsByClassName']('modal_item');
+  var flag = 0;
+  for (var i = 0; i < modalItem['length']; i++) {
+    if (modalItem[i]['dataset']['opened'] == '1') {
+      modalItem[i]['dataset']['opened'] = '0';
+      modalItem[i]['style']['display'] = 'block';
+      modalElement['style']['width'] = modalItem[i]['dataset']['width'];
+      modalElement['style']['left'] = modalItem[i]['dataset']['left'];
+      flag = 1
     }
   };
-  if (_0xdbf0x5b == 1) {
-    _0xdbf0x35['getElementsByClassName']('modal_close')[0]['onclick'] = window['tmp_fnc']
+  if (flag == 1) {
+    modalElement['getElementsByClassName']('modal_close')[0]['onclick'] = window['tmp_fnc']
   } else {
     hide_modal('level_block');
     if (window['player']['bonuses']['length'] > 0) {
@@ -908,11 +908,11 @@ function hide_modal_new_level() {
   }
 }
 
-function check_level(_0xdbf0x5d) {
-  var _0xdbf0x5e = false;
+function check_level(intFlag) {
+  var output = false;
   var _0xdbf0x38 = 0;
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['levels']['length']; _0xdbf0x4++) {
-    if (window['player']['experiences']['experience']['amount'] >= window['levels'][_0xdbf0x4]) {
+  for (var i = 0; i < window['levels']['length']; i++) {
+    if (window['player']['experiences']['experience']['amount'] >= window['levels'][i]) {
       _0xdbf0x38++
     }
   };
@@ -921,14 +921,14 @@ function check_level(_0xdbf0x5d) {
     show_modal_new_level();
     var _0xdbf0x5f = document['getElementById']('level_profile');
     _0xdbf0x5f['innerHTML'] = window['player']['static_resources']['level'];
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['top_level']['length']; _0xdbf0x4++) {
-      if (window['top_level'][_0xdbf0x4]['id'] == window['game_login']) {
-        window['top_level'][_0xdbf0x4]['static_resources']['level']++
+    for (var i = 0; i < window['top_level']['length']; i++) {
+      if (window['top_level'][i]['id'] == window['game_login']) {
+        window['top_level'][i]['static_resources']['level']++
       }
     };
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-      if (window['friends'][_0xdbf0x4]['id'] == window['game_login']) {
-        window['friends'][_0xdbf0x4]['static_resources']['level']++
+    for (var i = 0; i < window['friends']['length']; i++) {
+      if (window['friends'][i]['id'] == window['game_login']) {
+        window['friends'][i]['static_resources']['level']++
       }
     };
     if (window['friends_mode'] == 0) {
@@ -941,20 +941,20 @@ function check_level(_0xdbf0x5d) {
       }
     }
   };
-  if (_0xdbf0x5d == 1) {
+  if (intFlag == 1) {
     window['player']['static_resources']['level'] = _0xdbf0x38;
     var _0xdbf0x5f = document['getElementById']('level_profile');
     _0xdbf0x5f['innerHTML'] = window['player']['static_resources']['level'];
     var _0xdbf0x38 = 0;
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['levels']['length']; _0xdbf0x4++) {
-      if (window['player']['experiences']['experience']['amount'] >= window['levels'][_0xdbf0x4]) {
+    for (var i = 0; i < window['levels']['length']; i++) {
+      if (window['player']['experiences']['experience']['amount'] >= window['levels'][i]) {
         _0xdbf0x38++
       }
     };
     var _0xdbf0x60 = _0xdbf0x38 - 1;
     if (window['player']['static_resources']['level_reward'] < _0xdbf0x60 && _0xdbf0x60 > 0) {
       show_modal_new_level();
-      _0xdbf0x5e = true
+      output = true
     }
   };
   var _0xdbf0x61 = window['levels'][_0xdbf0x38] - window['levels'][_0xdbf0x38 - 1];
@@ -965,29 +965,29 @@ function check_level(_0xdbf0x5d) {
   var _0xdbf0x36 = document['getElementsByClassName']('progress_level')[0];
   _0xdbf0x36['style']['backgroundPosition'] = _0xdbf0x65 + 'px 0';
   _0xdbf0x36['setAttribute']('tooltipbig', 'До следующего уровня ' + _0xdbf0x62 + ' опыта');
-  return _0xdbf0x5e
+  return output
 }
 
-function update_level(_0xdbf0x5d) {
+function update_level(intFlag) {
   var _0xdbf0x38 = 0;
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['levels']['length']; _0xdbf0x4++) {
-    if (window['player']['experiences']['experience']['amount'] >= window['levels'][_0xdbf0x4]) {
+  for (var i = 0; i < window['levels']['length']; i++) {
+    if (window['player']['experiences']['experience']['amount'] >= window['levels'][i]) {
       _0xdbf0x38++
     }
   };
   if (_0xdbf0x38 > window['player']['static_resources']['level']) {
     window['player']['static_resources']['level'] = _0xdbf0x38;
     show_modal_new_level();
-    var _0xdbf0x5f = document['getElementById']('level_profile');
-    _0xdbf0x5f['innerHTML'] = window['player']['static_resources']['level'];
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['top_level']['length']; _0xdbf0x4++) {
-      if (window['top_level'][_0xdbf0x4]['id'] == window['game_login']) {
-        window['top_level'][_0xdbf0x4]['static_resources']['level']++
+    var levelProfileElement = document['getElementById']('level_profile');
+    levelProfileElement['innerHTML'] = window['player']['static_resources']['level'];
+    for (var i = 0; i < window['top_level']['length']; i++) {
+      if (window['top_level'][i]['id'] == window['game_login']) {
+        window['top_level'][i]['static_resources']['level']++
       }
     };
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-      if (window['friends'][_0xdbf0x4]['id'] == window['game_login']) {
-        window['friends'][_0xdbf0x4]['static_resources']['level']++
+    for (var i = 0; i < window['friends']['length']; i++) {
+      if (window['friends'][i]['id'] == window['game_login']) {
+        window['friends'][i]['static_resources']['level']++
       }
     };
     if (window['friends_mode'] == 0) {
@@ -1000,13 +1000,13 @@ function update_level(_0xdbf0x5d) {
       }
     }
   };
-  if (_0xdbf0x5d == 1) {
+  if (intFlag == 1) {
     window['player']['static_resources']['level'] = _0xdbf0x38;
-    var _0xdbf0x5f = document['getElementById']('level_profile');
-    _0xdbf0x5f['innerHTML'] = window['player']['static_resources']['level'];
+    var levelProfileElement = document['getElementById']('level_profile');
+    levelProfileElement['innerHTML'] = window['player']['static_resources']['level'];
     var _0xdbf0x38 = 0;
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['levels']['length']; _0xdbf0x4++) {
-      if (window['player']['experiences']['experience']['amount'] >= window['levels'][_0xdbf0x4]) {
+    for (var i = 0; i < window['levels']['length']; i++) {
+      if (window['player']['experiences']['experience']['amount'] >= window['levels'][i]) {
         _0xdbf0x38++
       }
     };
@@ -1026,8 +1026,8 @@ function update_level(_0xdbf0x5d) {
 }
 
 function change_resource(_0xdbf0x68, _0xdbf0x69) {
-  var _0xdbf0x6a = document['getElementById']('rte');
-  var _0xdbf0x36 = _0xdbf0x6a['getElementsByClassName']('default_icon')[0];
+  var rteElement = document['getElementById']('rte');
+  var _0xdbf0x36 = rteElement['getElementsByClassName']('default_icon')[0];
   if (_0xdbf0x68 == 'tokens') {
     var _0xdbf0x6b = 'Жетоны'
   } else {
@@ -1037,7 +1037,7 @@ function change_resource(_0xdbf0x68, _0xdbf0x69) {
   };
   _0xdbf0x36['setAttribute']('tooltip', _0xdbf0x6b);
   _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/' + _0xdbf0x68 + '_interface.png';
-  _0xdbf0x6a['getElementsByClassName']('default_count')[0]['innerHTML'] = window['player']['static_resources'][_0xdbf0x68];
+  rteElement['getElementsByClassName']('default_count')[0]['innerHTML'] = window['player']['static_resources'][_0xdbf0x68];
   if (_0xdbf0x68 == 'tokens') {
     var _0xdbf0x6c = 0
   } else {
@@ -1049,7 +1049,7 @@ function change_resource(_0xdbf0x68, _0xdbf0x69) {
     })
   };
   window['player']['settings']['resource'] = _0xdbf0x6c;
-  var _0xdbf0x55 = _0xdbf0x6a['getElementsByTagName']('li');
+  var _0xdbf0x55 = rteElement['getElementsByTagName']('li');
   _0xdbf0x55[0]['getElementsByClassName']('tokens_count')[0]['innerHTML'] = window['player']['static_resources']['tokens'];
   _0xdbf0x55[0]['getElementsByClassName']('tokens_plus')[0]['onclick'] = function() {
     show_shop(1);
@@ -1060,7 +1060,7 @@ function change_resource(_0xdbf0x68, _0xdbf0x69) {
     show_shop(1);
     shop_menu('encryptions', 1)
   };
-  _0xdbf0x6a['getElementsByClassName']('tokens_plus')[0]['onclick'] = function() {
+  rteElement['getElementsByClassName']('tokens_plus')[0]['onclick'] = function() {
     show_shop(0);
     shop_menu(_0xdbf0x68, 1)
   }
@@ -1080,16 +1080,16 @@ function change_music() {
   play_effect('click.mp3');
   if (window['player']['settings']['music'] == 1) {
     window['player']['settings']['music'] = 0;
-    var _0xdbf0x36 = document['getElementsByClassName']('music_interface')[0];
-    _0xdbf0x36['classList']['add']('off');
-    _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_off.png';
+    var musicInteraceElement = document['getElementsByClassName']('music_interface')[0];
+    musicInteraceElement['classList']['add']('off');
+    musicInteraceElement['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_off.png';
     window['bg_music']['volume'] = 0
   } else {
     if (window['player']['settings']['music'] == 0) {
       window['player']['settings']['music'] = 1;
-      var _0xdbf0x36 = document['getElementsByClassName']('music_interface')[0];
-      _0xdbf0x36['classList']['remove']('off');
-      _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_on.png';
+      var musicInteraceElement = document['getElementsByClassName']('music_interface')[0];
+      musicInteraceElement['classList']['remove']('off');
+      musicInteraceElement['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_on.png';
       window['bg_music']['volume'] = 1
     }
   };
@@ -1102,15 +1102,15 @@ function change_sound() {
   play_effect('click.mp3');
   if (window['player']['settings']['sound'] == 1) {
     window['player']['settings']['sound'] = 0;
-    var _0xdbf0x36 = document['getElementsByClassName']('sound_interface')[0];
-    _0xdbf0x36['classList']['add']('off');
-    _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_off.png'
+    var soundInterface = document['getElementsByClassName']('sound_interface')[0];
+    soundInterface['classList']['add']('off');
+    soundInterface['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_off.png'
   } else {
     if (window['player']['settings']['sound'] == 0) {
       window['player']['settings']['sound'] = 1;
-      var _0xdbf0x36 = document['getElementsByClassName']('sound_interface')[0];
-      _0xdbf0x36['classList']['remove']('off');
-      _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_on.png'
+      var soundInterface = document['getElementsByClassName']('sound_interface')[0];
+      soundInterface['classList']['remove']('off');
+      soundInterface['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_on.png'
     }
   };
   server_action('settings.sound', {
@@ -1119,13 +1119,13 @@ function change_sound() {
 }
 
 function update_static_resources_coins() {
-  var _0xdbf0x71 = document['getElementsByClassName']('coins_block')[0];
-  _0xdbf0x71['getElementsByClassName']('default_count')[0]['innerHTML'] = window['player']['static_resources']['coins']
+  var element = document['getElementsByClassName']('coins_block')[0];
+  element['getElementsByClassName']('default_count')[0]['innerHTML'] = window['player']['static_resources']['coins']
 }
 
 function update_static_resources_tickets() {
-  var _0xdbf0x71 = document['getElementsByClassName']('tickets_block')[0];
-  _0xdbf0x71['getElementsByClassName']('tickets_count')[0]['innerHTML'] = window['player']['static_resources']['tickets']
+  var element = document['getElementsByClassName']('tickets_block')[0];
+  element['getElementsByClassName']('tickets_count')[0]['innerHTML'] = window['player']['static_resources']['tickets']
 }
 
 function update_renewable_resources_supply() {
@@ -1134,8 +1134,8 @@ function update_renewable_resources_supply() {
   if (window['player']['static_resources']['boost_speed_recovery_supply']) {
     _0xdbf0x74 -= window['player']['static_resources']['boost_speed_recovery_supply']
   };
-  var _0xdbf0x71 = document['getElementsByClassName']('res_supply_block')[0];
-  _0xdbf0x71['getElementsByClassName']('default_count')[0]['innerHTML'] = _0xdbf0x59;
+  var suppyBlockElement = document['getElementsByClassName']('res_supply_block')[0];
+  suppyBlockElement['getElementsByClassName']('default_count')[0]['innerHTML'] = _0xdbf0x59;
   if (_0xdbf0x59 < (window['limit_supply_max'] + window['player']['static_resources']['boost_max_supply'])) {
     var _0xdbf0x75 = get_current_timestamp() - window['player']['renewable_resources']['supply']['time'];
     var _0xdbf0x76 = _0xdbf0x74 - (_0xdbf0x75 % _0xdbf0x74);
@@ -1144,27 +1144,27 @@ function update_renewable_resources_supply() {
       _0xdbf0x6 = '0' + _0xdbf0x6
     };
     var _0xdbf0x22 = (_0xdbf0x76 - _0xdbf0x6) / 60;
-    _0xdbf0x71['getElementsByClassName']('default_count')[0]['setAttribute']('tooltip', _0xdbf0x22 + ':' + _0xdbf0x6)
+    suppyBlockElement['getElementsByClassName']('default_count')[0]['setAttribute']('tooltip', _0xdbf0x22 + ':' + _0xdbf0x6)
   } else {
-    _0xdbf0x71['getElementsByClassName']('default_count')[0]['setAttribute']('tooltip', '--:--')
+    suppyBlockElement['getElementsByClassName']('default_count')[0]['setAttribute']('tooltip', '--:--')
   }
 }
 
-function server_get(_0xdbf0x12) {
+function server_get(response) {
   window['game_loaded'] = 1;
-  window['system'] = _0xdbf0x12['system'];
-  window['player'] = _0xdbf0x12['player'];
+  window['system'] = response['system'];
+  window['player'] = response['player'];
   check_gifts_status();
   check_boxes_status();
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['player']['payments']['length']; _0xdbf0x4++) {
-    switch (window['player']['payments'][_0xdbf0x4]['resource']) {
+  for (var i = 0; i < window['player']['payments']['length']; i++) {
+    switch (window['player']['payments'][i]['resource']) {
       case 0:
-        window['player']['static_resources']['coins'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['static_resources']['coins'] += window['player']['payments'][i]['amount'];
         update_static_resources_coins();
-        window['player']['achievements']['coins'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['achievements']['coins'] += window['player']['payments'][i]['amount'];
         for (var _0xdbf0x38 = 0; _0xdbf0x38 < window['calendar_tasks'][window['system']['moth']][window['system']['day']]['length']; _0xdbf0x38++) {
           if (window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['type'] == 'get_coins') {
-            window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x38] += window['player']['payments'][_0xdbf0x4]['amount'];
+            window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x38] += window['player']['payments'][i]['amount'];
             if (window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x38] >= window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['count'] && window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['done'] != 1) {
               window['player']['static_resources']['stamp'] += window['calendar_stamp'][_0xdbf0x38];
               window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['done'] = 1
@@ -1174,31 +1174,31 @@ function server_get(_0xdbf0x12) {
         break;
       case 1:
         var _0xdbf0x78 = renewable_resources(window['player']['renewable_resources']['supply']['time'], window['player']['renewable_resources']['supply']['amount'], window['player']['static_resources']['boost_max_supply'], window['player']['static_resources']['boost_speed_recovery_supply']);
-        _0xdbf0x78 += window['player']['payments'][_0xdbf0x4]['amount'];
+        _0xdbf0x78 += window['player']['payments'][i]['amount'];
         window['player']['renewable_resources']['supply']['amount'] = _0xdbf0x78;
         window['player']['renewable_resources']['supply']['time'] = get_current_timestamp();
         update_renewable_resources_supply();
         break;
       case 2:
-        window['player']['static_resources']['encryptions'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['static_resources']['encryptions'] += window['player']['payments'][i]['amount'];
         if (window['player']['settings']['resource'] == 0) {
           change_resource('tokens', 0)
         } else {
           change_resource('encryptions', 0)
         };
-        window['player']['achievements']['encryptions'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['achievements']['encryptions'] += window['player']['payments'][i]['amount'];
         break;
       case 3:
-        window['player']['static_resources']['tokens'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['static_resources']['tokens'] += window['player']['payments'][i]['amount'];
         if (window['player']['settings']['resource'] == 0) {
           change_resource('tokens', 0)
         } else {
           change_resource('encryptions', 0)
         };
-        window['player']['achievements']['tokens'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['achievements']['tokens'] += window['player']['payments'][i]['amount'];
         for (var _0xdbf0x38 = 0; _0xdbf0x38 < window['calendar_tasks'][window['system']['moth']][window['system']['day']]['length']; _0xdbf0x38++) {
           if (window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['type'] == 'get_tokens') {
-            window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x38] += window['player']['payments'][_0xdbf0x4]['amount'];
+            window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x38] += window['player']['payments'][i]['amount'];
             if (window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x38] >= window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['count'] && window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['done'] != 1) {
               window['player']['static_resources']['stamp'] += window['calendar_stamp'][_0xdbf0x38];
               window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x38]['done'] = 1
@@ -1207,55 +1207,55 @@ function server_get(_0xdbf0x12) {
         };
         break;
       case 4:
-        window['player']['static_resources']['tickets'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['static_resources']['tickets'] += window['player']['payments'][i]['amount'];
         update_static_resources_tickets();
-        window['player']['achievements']['tickets'] += window['player']['payments'][_0xdbf0x4]['amount'];
+        window['player']['achievements']['tickets'] += window['player']['payments'][i]['amount'];
         break
     };
     server_action('shop.buy', {
-      "order": window['player']['payments'][_0xdbf0x4]['order']
+      "order": window['player']['payments'][i]['order']
     })
   };
-  var _0xdbf0x79 = [];
+  var arr = [];
   if (window['player']['raid'] && window['player']['raid']['top']) {
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
+    for (var i = 0; i < window['friends']['length']; i++) {
       for (var _0xdbf0x38 = 0; _0xdbf0x38 < window['player']['raid']['top']['length']; _0xdbf0x38++) {
-        if (window['player']['raid']['top'][_0xdbf0x38][0] == window['friends'][_0xdbf0x4]['id'] && !window['friends'][_0xdbf0x4]['profile']) {
-          _0xdbf0x79['push'](window['player']['raid']['top'][_0xdbf0x38][0])
+        if (window['player']['raid']['top'][_0xdbf0x38][0] == window['friends'][i]['id'] && !window['friends'][i]['profile']) {
+          arr['push'](window['player']['raid']['top'][_0xdbf0x38][0])
         }
       }
     };
-    if (_0xdbf0x79['length'] > 0) {
+    if (arr['length'] > 0) {
       VK['api']('users.get', {
-        user_ids: _0xdbf0x79['join'](','),
+        user_ids: arr['join'](','),
         fields: 'photo_50,sex'
       }, friends_vk_load_window)
     }
   };
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['calendar_tasks'][window['system']['moth']][window['system']['day']]['length']; _0xdbf0x4++) {
-    if (window['player']['calendar'][window['system']['moth']][window['system']['day']][_0xdbf0x4] >= window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x4]['count']) {
-      window['calendar_tasks'][window['system']['moth']][window['system']['day']][_0xdbf0x4]['done'] = 1
+  for (var i = 0; i < window['calendar_tasks'][window['system']['moth']][window['system']['day']]['length']; i++) {
+    if (window['player']['calendar'][window['system']['moth']][window['system']['day']][i] >= window['calendar_tasks'][window['system']['moth']][window['system']['day']][i]['count']) {
+      window['calendar_tasks'][window['system']['moth']][window['system']['day']][i]['done'] = 1
     }
   };
-  var _0xdbf0x79 = [];
+  var arr = [];
   var _0xdbf0x7a = [];
   var _0xdbf0x7b = [];
   var _0xdbf0x7c = [];
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-    if (window['friends'][_0xdbf0x4]['profile']) {
-      _0xdbf0x7c['push'](window['friends'][_0xdbf0x4]['id'])
+  for (var i = 0; i < window['friends']['length']; i++) {
+    if (window['friends'][i]['profile']) {
+      _0xdbf0x7c['push'](window['friends'][i]['id'])
     }
   };
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['other_friends']['length']; _0xdbf0x4++) {
-    if (window['other_friends'][_0xdbf0x4]['profile']) {
-      _0xdbf0x7c['push'](window['other_friends'][_0xdbf0x4]['id'])
+  for (var i = 0; i < window['other_friends']['length']; i++) {
+    if (window['other_friends'][i]['profile']) {
+      _0xdbf0x7c['push'](window['other_friends'][i]['id'])
     }
   };
   if (window['player']['gifts']) {
     for (var _0xdbf0x7d in window['player']['gifts']) {
-      for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
-        if (window['friends'][_0xdbf0x4]['id'] == window['player']['gifts'][_0xdbf0x7d]['sender'] && !window['friends'][_0xdbf0x4]['profile']) {
-          _0xdbf0x79['push'](_0xdbf0x7d)
+      for (var i = 0; i < window['friends']['length']; i++) {
+        if (window['friends'][i]['id'] == window['player']['gifts'][_0xdbf0x7d]['sender'] && !window['friends'][i]['profile']) {
+          arr['push'](_0xdbf0x7d)
         }
       };
       if (!in_array(window['player']['gifts'][_0xdbf0x7d]['sender'], _0xdbf0x7c)) {
@@ -1264,10 +1264,10 @@ function server_get(_0xdbf0x12) {
     }
   };
   if (window['player']['newsfeed']) {
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['friends']['length']; _0xdbf0x4++) {
+    for (var i = 0; i < window['friends']['length']; i++) {
       for (var _0xdbf0x38 = 0; _0xdbf0x38 < window['player']['newsfeed']['length']; _0xdbf0x38++) {
-        if (window['player']['newsfeed'][_0xdbf0x38]['sender'] == window['friends'][_0xdbf0x4]['id'] && !window['friends'][_0xdbf0x4]['profile']) {
-          _0xdbf0x79['push'](window['player']['newsfeed'][_0xdbf0x38]['sender'])
+        if (window['player']['newsfeed'][_0xdbf0x38]['sender'] == window['friends'][i]['id'] && !window['friends'][i]['profile']) {
+          arr['push'](window['player']['newsfeed'][_0xdbf0x38]['sender'])
         };
         if (!in_array(window['player']['newsfeed'][_0xdbf0x38]['sender'], _0xdbf0x7c)) {
           _0xdbf0x7b['push'](window['player']['newsfeed'][_0xdbf0x38]['sender'])
@@ -1277,27 +1277,27 @@ function server_get(_0xdbf0x12) {
   };
   if (_0xdbf0x7b['length'] > 0) {
     var _0xdbf0x7e = [];
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < window['other_friends']['length']; _0xdbf0x4++) {
-      _0xdbf0x7e['push'](window['other_friends'][_0xdbf0x4]['id'])
+    for (var i = 0; i < window['other_friends']['length']; i++) {
+      _0xdbf0x7e['push'](window['other_friends'][i]['id'])
     };
-    for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x7b['length']; _0xdbf0x4++) {
-      if (!in_array(_0xdbf0x7b[_0xdbf0x4], _0xdbf0x7e)) {
+    for (var i = 0; i < _0xdbf0x7b['length']; i++) {
+      if (!in_array(_0xdbf0x7b[i], _0xdbf0x7e)) {
         var _0xdbf0x42 = {
-          id: _0xdbf0x7b[_0xdbf0x4],
+          id: _0xdbf0x7b[i],
           sign: null,
           static_resources: {
             level: 1
           }
         };
         window['other_friends']['push'](_0xdbf0x42);
-        _0xdbf0x7a['push'](_0xdbf0x7b[_0xdbf0x4]);
-        _0xdbf0x7e['push'](_0xdbf0x7b[_0xdbf0x4])
+        _0xdbf0x7a['push'](_0xdbf0x7b[i]);
+        _0xdbf0x7e['push'](_0xdbf0x7b[i])
       }
     }
   };
-  if (_0xdbf0x79['length'] > 0) {
+  if (arr['length'] > 0) {
     VK['api']('users.get', {
-      user_ids: _0xdbf0x79['join'](','),
+      user_ids: arr['join'](','),
       fields: 'photo_50,sex'
     }, friends_vk_load_window)
   };
@@ -1315,18 +1315,18 @@ function server_get(_0xdbf0x12) {
     show_shop(0);
     shop_menu('supply', 1)
   };
-  var _0xdbf0x7f = document['getElementById']('select_tokens');
-  _0xdbf0x7f['onclick'] = function() {
+  var selectTokenElement = document['getElementById']('select_tokens');
+  selectTokenElement['onclick'] = function() {
     play_effect('click.mp3');
     change_resource('tokens', 1)
   };
-  _0xdbf0x7f['getElementsByClassName']('tokens_count')[0]['innerHTML'] = window['player']['static_resources']['tokens'];
-  var _0xdbf0x80 = document['getElementById']('select_encryptions');
-  _0xdbf0x80['onclick'] = function() {
+  selectTokenElement['getElementsByClassName']('tokens_count')[0]['innerHTML'] = window['player']['static_resources']['tokens'];
+  var selectEncryptionsElement = document['getElementById']('select_encryptions');
+  selectEncryptionsElement['onclick'] = function() {
     play_effect('click.mp3');
     change_resource('encryptions', 1)
   };
-  _0xdbf0x80['getElementsByClassName']('encryptions_count')[0]['innerHTML'] = window['player']['static_resources']['encryptions'];
+  selectEncryptionsElement['getElementsByClassName']('encryptions_count')[0]['innerHTML'] = window['player']['static_resources']['encryptions'];
   if (window['player']['settings']['resource'] == 0) {
     change_resource('tokens', 0)
   } else {
@@ -1348,9 +1348,9 @@ function server_get(_0xdbf0x12) {
     document['getElementsByClassName']('music_interface')[0]['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_on.png'
   } else {
     if (window['player']['settings']['music'] == 0) {
-      var _0xdbf0x36 = document['getElementsByClassName']('music_interface')[0];
-      _0xdbf0x36['classList']['add']('off');
-      _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_off.png'
+      var musicInterfaceElement = document['getElementsByClassName']('music_interface')[0];
+      musicInterfaceElement['classList']['add']('off');
+      musicInterfaceElement['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/music_off.png'
     }
   };
   document['getElementsByClassName']('music_interface')[0]['onclick'] = function() {
@@ -1360,9 +1360,9 @@ function server_get(_0xdbf0x12) {
     document['getElementsByClassName']('sound_interface')[0]['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_on.png'
   } else {
     if (window['player']['settings']['sound'] == 0) {
-      var _0xdbf0x36 = document['getElementsByClassName']('sound_interface')[0];
-      _0xdbf0x36['classList']['add']('off');
-      _0xdbf0x36['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_off.png'
+      var musicInterfaceElement = document['getElementsByClassName']('sound_interface')[0];
+      musicInterfaceElement['classList']['add']('off');
+      musicInterfaceElement['getElementsByTagName']('img')[0]['src'] = 'https://cdn.bravegames.space/regiment/images/sound_off.png'
     }
   };
   document['getElementsByClassName']('sound_interface')[0]['onclick'] = function() {
@@ -1398,11 +1398,11 @@ function server_get(_0xdbf0x12) {
   document['getElementById']('weapons')['onclick'] = show_weapons;
   document['getElementById']('talents')['onclick'] = show_talents;
   document['getElementById']('arrow_prev')['onclick'] = my_friends_prev;
-  var _0xdbf0x81 = document['getElementById']('arrow_next');
+  var arrowNextElement = document['getElementById']('arrow_next');
   if (window['friends']['length'] > 10) {
-    _0xdbf0x81['style']['right'] = '-22px'
+    arrowNextElement['style']['right'] = '-22px'
   };
-  _0xdbf0x81['onclick'] = my_friends_next;
+  arrowNextElement['onclick'] = my_friends_next;
   document['getElementsByClassName']('add_friend')[0]['onclick'] = invite_friends;
   document['getElementById']('progress')['innerHTML'] = 100;
   document['getElementById']('preloader_meter')['style']['width'] = '100%';
@@ -1428,21 +1428,21 @@ function show_subscription_functions() {
   document['getElementsByClassName']('main_menu')[0]['style']['display'] = 'none';
   document['getElementsByClassName']('footer')[0]['style']['display'] = 'none';
   document['getElementsByClassName']('main')[0]['className'] = 'main subscription';
-  var _0xdbf0x36 = document['getElementsByClassName']('subscription_block')[0];
-  _0xdbf0x36['style']['display'] = 'block';
-  _0xdbf0x36['getElementsByClassName']('subscription_settings_raids')[0]['style']['display'] = 'none';
-  _0xdbf0x36['getElementsByClassName']('subscription_functions_block')[0]['style']['display'] = 'flex';
-  _0xdbf0x36['getElementsByClassName']('subscription_journal_button')[0]['style']['display'] = 'none';
-  _0xdbf0x36['getElementsByClassName']('modal_close')[0]['onclick'] = hide_boss_manager;
-  var _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_functions_block_button');
-  _0xdbf0x55[0]['onclick'] = function() {
+  var subscriptionBlockElement = document['getElementsByClassName']('subscription_block')[0];
+  subscriptionBlockElement['style']['display'] = 'block';
+  subscriptionBlockElement['getElementsByClassName']('subscription_settings_raids')[0]['style']['display'] = 'none';
+  subscriptionBlockElement['getElementsByClassName']('subscription_functions_block')[0]['style']['display'] = 'flex';
+  subscriptionBlockElement['getElementsByClassName']('subscription_journal_button')[0]['style']['display'] = 'none';
+  subscriptionBlockElement['getElementsByClassName']('modal_close')[0]['onclick'] = hide_boss_manager;
+  var buttons = subscriptionBlockElement['getElementsByClassName']('subscription_functions_block_button');
+  buttons[0]['onclick'] = function() {
     hide_boss_manager();
     show_hangar()
   };
-  _0xdbf0x55[1]['onclick'] = function() {
+  buttons[1]['onclick'] = function() {
     show_boxes_subscription()
   };
-  _0xdbf0x55[2]['onclick'] = function() {
+  buttons[2]['onclick'] = function() {
     hide_boss_manager();
     show_collections()
   }
@@ -1450,41 +1450,41 @@ function show_subscription_functions() {
 
 function work_bm_begin() {
   if (get_current_timestamp() < window['player']['subscription']['paid_time']) {
-    var _0xdbf0x36 = document['getElementsByClassName']('subscription_block')[0];
+    var subscriptionBlockElement = document['getElementsByClassName']('subscription_block')[0];
     var _0xdbf0x76 = window['player']['subscription']['paid_time'] - get_current_timestamp();
     var _0xdbf0x6 = _0xdbf0x76 % 86400;
-    var _0xdbf0x85 = (_0xdbf0x76 - _0xdbf0x6) / 86400;
-    if (_0xdbf0x85 > 0) {
+    var days = (_0xdbf0x76 - _0xdbf0x6) / 86400;
+    if (days > 0) {
       if (_0xdbf0x6 > 0) {
-        _0xdbf0x85++
+        days++
       };
-      var _0xdbf0x2c = word_form(_0xdbf0x85, 'день', 'дня', 'дней')
+      var output = word_form(days, 'день', 'дня', 'дней')
     } else {
       var _0xdbf0x86 = _0xdbf0x6 % 3600;
-      var _0xdbf0x87 = (_0xdbf0x6 - _0xdbf0x86) / 3600;
-      if (_0xdbf0x87 > 0) {
+      var hours = (_0xdbf0x6 - _0xdbf0x86) / 3600;
+      if (hours > 0) {
         if (_0xdbf0x86 > 0) {
-          _0xdbf0x87++
+          hours++
         };
-        var _0xdbf0x2c = word_form(_0xdbf0x87, 'час', 'часа', 'часов')
+        var output = word_form(hours, 'час', 'часа', 'часов')
       } else {
         var _0xdbf0x88 = _0xdbf0x86 % 60;
-        var _0xdbf0x89 = (_0xdbf0x86 - _0xdbf0x88) / 60;
-        if (_0xdbf0x89 > 0) {
+        var minutes = (_0xdbf0x86 - _0xdbf0x88) / 60;
+        if (minutes > 0) {
           if (_0xdbf0x88 > 0) {
-            _0xdbf0x89++
+            minutes++
           };
-          var _0xdbf0x2c = word_form(_0xdbf0x89, 'минута', 'минуты', 'минут')
+          var output = word_form(minutes, 'минута', 'минуты', 'минут')
         } else {
           var _0xdbf0x88 = _0xdbf0x86 % 60;
-          var _0xdbf0x2c = word_form(_0xdbf0x88, 'секунда', 'секунды', 'секунд')
+          var output = word_form(seconds, 'секунда', 'секунды', 'секунд')
         }
       }
     };
-    var _0xdbf0x75 = _0xdbf0x36['getElementsByClassName']('subscription_status')[0]['getElementsByTagName']('span')[0];
-    _0xdbf0x75['innerHTML'] = _0xdbf0x2c;
-    _0xdbf0x75['style']['cursor'] = 'pointer';
-    _0xdbf0x75['onclick'] = show_status_subscription
+    var span = subscriptionBlockElement['getElementsByClassName']('subscription_status')[0]['getElementsByTagName']('span')[0];
+    span['innerHTML'] = output;
+    span['style']['cursor'] = 'pointer';
+    span['onclick'] = show_status_subscription
   } else {
     clearTimeout(window['ubt']);
     hide_boss_manager();
@@ -1497,23 +1497,23 @@ function show_boss_manager() {
   document['getElementsByClassName']('main_menu')[0]['style']['display'] = 'none';
   document['getElementsByClassName']('footer')[0]['style']['display'] = 'none';
   document['getElementsByClassName']('main')[0]['className'] = 'main subscription';
-  var _0xdbf0x36 = document['getElementsByClassName']('subscription_block')[0];
-  _0xdbf0x36['style']['display'] = 'block';
-  _0xdbf0x36['getElementsByClassName']('subscription_functions_block')[0]['style']['display'] = 'none';
-  _0xdbf0x36['getElementsByClassName']('subscription_settings_raids')[0]['style']['display'] = 'block';
-  _0xdbf0x36['getElementsByClassName']('modal_close')[0]['onclick'] = hide_boss_manager;
-  _0xdbf0x36['getElementsByClassName']('subscription_hacking_boxes')[0]['onclick'] = function() {
+  var subscriptionBlockElement = document['getElementsByClassName']('subscription_block')[0];
+  subscriptionBlockElement['style']['display'] = 'block';
+  subscriptionBlockElement['getElementsByClassName']('subscription_functions_block')[0]['style']['display'] = 'none';
+  subscriptionBlockElement['getElementsByClassName']('subscription_settings_raids')[0]['style']['display'] = 'block';
+  subscriptionBlockElement['getElementsByClassName']('modal_close')[0]['onclick'] = hide_boss_manager;
+  subscriptionBlockElement['getElementsByClassName']('subscription_hacking_boxes')[0]['onclick'] = function() {
     window['bs_input'] = 1;
     show_boxes_subscription()
   };
   boss_manager_change_mode(0);
-  var _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_raid_buttons')[0]['getElementsByTagName']('div');
-  _0xdbf0x55[0]['onclick'] = show_boss_manager_add;
-  _0xdbf0x55[1]['innerHTML'] = 'Запустить';
-  _0xdbf0x55[1]['className'] = 'button button_green';
-  _0xdbf0x55[1]['onclick'] = boss_manager_start;
-  _0xdbf0x55[2]['style']['cursor'] = 'pointer';
-  _0xdbf0x55[2]['onclick'] = boss_manager_clear;
+  var divElement = subscriptionBlockElement['getElementsByClassName']('subscription_raid_buttons')[0]['getElementsByTagName']('div');
+  divElement[0]['onclick'] = show_boss_manager_add;
+  divElement[1]['innerHTML'] = 'Запустить';
+  divElement[1]['className'] = 'button button_green';
+  divElement[1]['onclick'] = boss_manager_start;
+  divElement[2]['style']['cursor'] = 'pointer';
+  divElement[2]['onclick'] = boss_manager_clear;
   boss_manager_update_list();
   window['ubt_i'] = 0;
   window['boss_manager'] = 0;
@@ -1522,22 +1522,22 @@ function show_boss_manager() {
 }
 
 function boss_manager_update_journal() {
-  var _0xdbf0x36 = document['getElementsByClassName']('subscription_block')[0];
-  var _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_journal_list_scroll')[0];
-  while (_0xdbf0x55['firstChild']) {
-    _0xdbf0x55['removeChild'](_0xdbf0x55['firstChild'])
+  var subscriptionBlockElement = document['getElementsByClassName']('subscription_block')[0];
+  var scrollListElement = subscriptionBlockElement['getElementsByClassName']('subscription_journal_list_scroll')[0];
+  while (scrollListElement['firstChild']) {
+    scrollListElement['removeChild'](scrollListElement['firstChild'])
   };
-  window['player']['boss_manager_journal']['sort'](function(_0xdbf0x8c, _0xdbf0x8d) {
-    if (_0xdbf0x8c['time'] < _0xdbf0x8d['time']) {
+  window['player']['boss_manager_journal']['sort'](function(a, b) {
+    if (a['time'] < b['time']) {
       return 1
     } else {
-      if (_0xdbf0x8c['time'] > _0xdbf0x8d['time']) {
+      if (a['time'] > b['time']) {
         return -1
       } else {
-        if (_0xdbf0x8c['id'] < _0xdbf0x8d['id']) {
+        if (a['id'] < b['id']) {
           return 1
         } else {
-          if (_0xdbf0x8c['id'] > _0xdbf0x8d['id']) {
+          if (a['id'] > b['id']) {
             return -1
           } else {
             return 0
@@ -1678,31 +1678,31 @@ function boss_manager_update_journal() {
     _0xdbf0x76['innerHTML'] = _0xdbf0x2c;
     _0xdbf0x76['className'] = 'subscription_journal_list_item_time';
     _0xdbf0x8e['appendChild'](_0xdbf0x76);
-    _0xdbf0x55['appendChild'](_0xdbf0x8e)
+    scrollListElement['appendChild'](_0xdbf0x8e)
   }
 }
 
 function boss_manager_stop() {
   window['boss_manager'] = 0;
-  var _0xdbf0x36 = document['getElementsByClassName']('subscription_block')[0];
-  var _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_raid_buttons')[0]['getElementsByTagName']('div');
-  _0xdbf0x55[1]['innerHTML'] = 'Запустить';
-  _0xdbf0x55[1]['className'] = 'button button_green';
-  _0xdbf0x55[1]['onclick'] = boss_manager_start
+  var subscriptionBlockElement = document['getElementsByClassName']('subscription_block')[0];
+  var divElement = subscriptionBlockElement['getElementsByClassName']('subscription_raid_buttons')[0]['getElementsByTagName']('div');
+  divElement[1]['innerHTML'] = 'Запустить';
+  divElement[1]['className'] = 'button button_green';
+  divElement[1]['onclick'] = boss_manager_start
 }
 
 function boss_manager_start() {
   window['boss_manager'] = 1;
-  var _0xdbf0x36 = document['getElementsByClassName']('subscription_block')[0];
-  var _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_raid_buttons')[0]['getElementsByTagName']('div');
-  _0xdbf0x55[1]['innerHTML'] = 'Остановить';
-  _0xdbf0x55[1]['className'] = 'button button_red';
-  _0xdbf0x55[1]['onclick'] = boss_manager_stop
+  var subscriptionBlockElement = document['getElementsByClassName']('subscription_block')[0];
+  var divElement = subscriptionBlockElement['getElementsByClassName']('subscription_raid_buttons')[0]['getElementsByTagName']('div');
+  divElement[1]['innerHTML'] = 'Остановить';
+  divElement[1]['className'] = 'button button_red';
+  divElement[1]['onclick'] = boss_manager_stop
 }
 
 function boss_manager_select_boss_active() {
-  var _0xdbf0x35 = document['getElementById']('modal');
-  var _0xdbf0x36 = _0xdbf0x35['getElementsByClassName']('subscription_add_boss')[0];
+  var modalElement = document['getElementById']('modal');
+  var _0xdbf0x36 = modalElement['getElementsByClassName']('subscription_add_boss')[0];
   var _0xdbf0x5e = 0;
   var _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[2];
   if (_0xdbf0x96['style']['zIndex'] == '2') {
@@ -1721,8 +1721,8 @@ function boss_manager_select_boss_active() {
 }
 
 function boss_manager_select_free_hit_active() {
-  var _0xdbf0x35 = document['getElementById']('modal');
-  var _0xdbf0x36 = _0xdbf0x35['getElementsByClassName']('subscription_add_boss')[0];
+  var modalElement = document['getElementById']('modal');
+  var _0xdbf0x36 = modalElement['getElementsByClassName']('subscription_add_boss')[0];
   var _0xdbf0x5e = 0;
   var _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[0];
   if (_0xdbf0x96['style']['zIndex'] == '2') {
@@ -1741,8 +1741,8 @@ function boss_manager_select_free_hit_active() {
 }
 
 function boss_manager_select_hit_active() {
-  var _0xdbf0x35 = document['getElementById']('modal');
-  var _0xdbf0x36 = _0xdbf0x35['getElementsByClassName']('subscription_add_boss')[0];
+  var modalElement = document['getElementById']('modal');
+  var _0xdbf0x36 = modalElement['getElementsByClassName']('subscription_add_boss')[0];
   var _0xdbf0x5e = 0;
   var _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[0];
   if (_0xdbf0x96['style']['zIndex'] == '2') {
@@ -1763,21 +1763,21 @@ function boss_manager_select_hit_active() {
 function boss_manager_edit(_0xdbf0x9a) {
   document['getElementsByClassName']('header')[0]['style']['zIndex'] = '4';
   document['getElementsByClassName']('modal_shadow')[0]['style']['display'] = 'block';
-  var _0xdbf0x35 = document['getElementById']('modal');
-  _0xdbf0x35['getElementsByClassName']('modal_close')[0]['onclick'] = hide_boss_manager_add;
-  _0xdbf0x35['style']['width'] = '470px';
-  _0xdbf0x35['style']['left'] = '265px';
-  _0xdbf0x35['style']['display'] = 'block';
-  var _0xdbf0x36 = _0xdbf0x35['getElementsByClassName']('subscription_add_boss')[0];
-  _0xdbf0x36['getElementsByClassName']('modal_header')[0]['innerHTML'] = 'Редактирование слота';
-  _0xdbf0x36['onclick'] = function() {
+  var modalElement = document['getElementById']('modal');
+  modalElement['getElementsByClassName']('modal_close')[0]['onclick'] = hide_boss_manager_add;
+  modalElement['style']['width'] = '470px';
+  modalElement['style']['left'] = '265px';
+  modalElement['style']['display'] = 'block';
+  var button = modalElement['getElementsByClassName']('subscription_add_boss')[0];
+  button['getElementsByClassName']('modal_header')[0]['innerHTML'] = 'Редактирование слота';
+  button['onclick'] = function() {
     if (event['target']['tagName'] == 'DIV' && event['target']['className'] != 'subscription_add_boss_select select_boss' && event['target']['className'] != 'subscription_add_boss_select select_weapon') {
       boss_manager_select_boss_deactive();
       boss_manager_select_free_hit_deactive();
       boss_manager_select_hit_deactive()
     }
   };
-  var _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[0];
+  var _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[0];
   _0xdbf0x96['dataset']['bid'] = window['player']['boss_manager'][_0xdbf0x9a]['boss'];
   _0xdbf0x96['getElementsByTagName']('label')[0]['innerHTML'] = window['bosses'][window['player']['boss_manager'][_0xdbf0x9a]['boss']]['default_name'];
   _0xdbf0x96['onclick'] = boss_manager_select_boss_active;
@@ -1790,7 +1790,7 @@ function boss_manager_edit(_0xdbf0x9a) {
       }
     }
   };
-  _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[1];
+  _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[1];
   var _0xdbf0x9c = _0xdbf0x96['getElementsByTagName']('input')[0];
   _0xdbf0x9c['value'] = window['player']['boss_manager'][_0xdbf0x9a]['amount'];
   _0xdbf0x9c['onfocus'] = boss_manager_add_number_focus;
@@ -1798,13 +1798,13 @@ function boss_manager_edit(_0xdbf0x9a) {
   _0xdbf0x9c['oninput'] = boss_manager_add_number_input;
   _0xdbf0x96['getElementsByTagName']('button')[0]['onclick'] = boss_manager_add_number_plus;
   _0xdbf0x96['getElementsByTagName']('button')[1]['onclick'] = boss_manager_add_number_minus;
-  _0xdbf0x9c = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_weakening')[0]['getElementsByTagName']('input')[0];
+  _0xdbf0x9c = button['getElementsByClassName']('subscription_add_boss_weakening')[0]['getElementsByTagName']('input')[0];
   if (window['player']['boss_manager'][_0xdbf0x9a]['debuff'] == 1) {
     _0xdbf0x9c['checked'] = true
   } else {
     _0xdbf0x9c['checked'] = false
   };
-  _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[2];
+  _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[2];
   _0xdbf0x96['dataset']['fhid'] = window['player']['boss_manager'][_0xdbf0x9a]['free_hit'];
   _0xdbf0x96['onclick'] = boss_manager_select_free_hit_active;
   _0xdbf0x96['getElementsByTagName']('label')[0]['innerHTML'] = window['free_hits'][window['player']['boss_manager'][_0xdbf0x9a]['free_hit']]['name'];
@@ -1815,7 +1815,7 @@ function boss_manager_edit(_0xdbf0x9a) {
       boss_manager_add_select_hit(_0xdbf0x9d)
     }
   };
-  _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[3];
+  _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[3];
   _0xdbf0x96['onclick'] = boss_manager_select_hit_active;
   _0xdbf0x96['getElementsByTagName']('label')[0]['innerHTML'] = 'Выбор удара';
   _0xdbf0x55 = _0xdbf0x96['getElementsByTagName']('li');
@@ -1825,7 +1825,7 @@ function boss_manager_edit(_0xdbf0x9a) {
       boss_manager_add_select_hit2(_0xdbf0x9e)
     }
   };
-  _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[4];
+  _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[4];
   _0xdbf0x96['style']['display'] = 'none';
   _0xdbf0x9c = _0xdbf0x96['getElementsByTagName']('input')[0];
   _0xdbf0x9c['value'] = '0';
@@ -1834,10 +1834,10 @@ function boss_manager_edit(_0xdbf0x9a) {
   _0xdbf0x9c['oninput'] = boss_manager_add_number2_input;
   _0xdbf0x96['getElementsByTagName']('button')[0]['onclick'] = boss_manager_add_number2_plus;
   _0xdbf0x96['getElementsByTagName']('button')[1]['onclick'] = boss_manager_add_number2_minus;
-  var _0xdbf0x9f = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_apply')[0];
+  var _0xdbf0x9f = button['getElementsByClassName']('subscription_add_boss_apply')[0];
   _0xdbf0x9f['style']['display'] = 'none';
   _0xdbf0x9f['onclick'] = boss_manager_add_hit;
-  var _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_weapons_list')[0];
+  var _0xdbf0x55 = button['getElementsByClassName']('subscription_weapons_list')[0];
   while (_0xdbf0x55['firstChild']) {
     _0xdbf0x55['removeChild'](_0xdbf0x55['firstChild'])
   };
@@ -1870,23 +1870,23 @@ function boss_manager_edit(_0xdbf0x9a) {
     _0xdbf0x8e['appendChild'](_0xdbf0xa3);
     _0xdbf0x55['appendChild'](_0xdbf0x8e);
     _0xdbf0x55['dataset']['last_id'] = _0xdbf0xa0;
-    _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[3];
+    _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[3];
     _0xdbf0x96['getElementsByTagName']('label')[0]['innerHTML'] = 'Выбор удара';
-    _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[4];
+    _0xdbf0x96 = button['getElementsByClassName']('subscription_add_boss_select')[4];
     _0xdbf0x96['style']['display'] = 'none';
     _0xdbf0x9c = _0xdbf0x96['getElementsByTagName']('input')[0];
     _0xdbf0x9c['value'] = '0';
-    var _0xdbf0x9f = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_apply')[0];
+    var _0xdbf0x9f = button['getElementsByClassName']('subscription_add_boss_apply')[0];
     _0xdbf0x9f['style']['display'] = 'none'
   };
   _0xdbf0x55['dataset']['last_id'] = _0xdbf0xa0;
-  _0xdbf0x55 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_button')[0]['getElementsByClassName']('button');
+  _0xdbf0x55 = button['getElementsByClassName']('subscription_add_boss_button')[0]['getElementsByClassName']('button');
   _0xdbf0x55[0]['onclick'] = function() {
     boss_manager_edit_save(_0xdbf0x9a)
   };
   _0xdbf0x55[1]['style']['cursor'] = 'pointer';
   _0xdbf0x55[1]['onclick'] = boss_manager_add_clear;
-  _0xdbf0x36['style']['display'] = 'block'
+  button['style']['display'] = 'block'
 }
 
 function show_boss_manager_add() {
@@ -1975,8 +1975,8 @@ function show_boss_manager_add() {
 }
 
 function boss_manager_edit_save(_0xdbf0x9a) {
-  var _0xdbf0x35 = document['getElementById']('modal');
-  var _0xdbf0x36 = _0xdbf0x35['getElementsByClassName']('subscription_add_boss')[0];
+  var modalElement = document['getElementById']('modal');
+  var _0xdbf0x36 = modalElement['getElementsByClassName']('subscription_add_boss')[0];
   var _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[0];
   var _0xdbf0x9b = parseInt(_0xdbf0x96['dataset']['bid']);
   _0xdbf0x96 = _0xdbf0x36['getElementsByClassName']('subscription_add_boss_select')[1];
@@ -19426,18 +19426,18 @@ function change_type_supply() {
   this['className'] = 'send_supply_item active'
 }
 
-function show_tutorial(_0xdbf0x5d) {
-  if (_0xdbf0x5d == 0 || _0xdbf0x5d == 31 || _0xdbf0x5d == 33) {
+function show_tutorial(index) {
+  if (index == 0 || index == 31 || index == 33) {
     document['getElementsByClassName']('button_tutorial_yes')[0]['style']['display'] = 'none';
     document['getElementsByClassName']('button_tutorial_no')[0]['style']['display'] = 'none'
   } else {
-    if (_0xdbf0x5d == 1 || _0xdbf0x5d == 5 || _0xdbf0x5d == 11 || _0xdbf0x5d == 17 || _0xdbf0x5d == 22) {
+    if (index == 1 || index == 5 || index == 11 || index == 17 || index == 22) {
       document['getElementsByClassName']('game_karkass')[0]['style']['pointerEvents'] = 'none';
       document['getElementsByClassName']('help_interface')[0]['style']['pointerEvents'] = 'auto';
       document['getElementsByClassName']('music_interface')[0]['style']['pointerEvents'] = 'auto';
       document['getElementsByClassName']('sound_interface')[0]['style']['pointerEvents'] = 'auto';
       document['getElementsByClassName']('full_interface')[0]['style']['pointerEvents'] = 'auto';
-      if (_0xdbf0x5d == 11) {
+      if (index == 11) {
         server_action('tutorial.reset', {
           "step": 2
         });
@@ -19459,7 +19459,7 @@ function show_tutorial(_0xdbf0x5d) {
         });
         window['player']['static_resources']['boxes_id'] = 3
       } else {
-        if (_0xdbf0x5d == 5) {
+        if (index == 5) {
           server_action('tutorial.reset', {
             "step": 1
           });
@@ -19471,40 +19471,40 @@ function show_tutorial(_0xdbf0x5d) {
       }
     }
   };
-  var _0xdbf0x36 = document['getElementsByClassName']('tutorial')[0];
-  _0xdbf0x36['style']['display'] = 'block';
-  if (_0xdbf0x5d == 20) {
-    _0xdbf0x36['style']['zIndex'] = '7'
+  var tutorialElement = document['getElementsByClassName']('tutorial')[0];
+  tutorialElement['style']['display'] = 'block';
+  if (index == 20) {
+    tutorialElement['style']['zIndex'] = '7'
   } else {
-    _0xdbf0x36['style']['zIndex'] = '4'
+    tutorialElement['style']['zIndex'] = '4'
   };
-  _0xdbf0x36['dataset']['mode'] = _0xdbf0x5d;
-  _0xdbf0x36['style']['background'] = 'rgba(0,0,0,0.8)';
-  var _0xdbf0x447 = _0xdbf0x36['getElementsByClassName']('tutorial_marina')[0];
-  _0xdbf0x447['style']['display'] = 'block';
-  animation(_0xdbf0x447, 'left', -284, -5, 1, 500, 'show_tutorial_text_frame')
+  tutorialElement['dataset']['mode'] = index;
+  tutorialElement['style']['background'] = 'rgba(0,0,0,0.8)';
+  var marinaElement = tutorialElement['getElementsByClassName']('tutorial_marina')[0];
+  marinaElement['style']['display'] = 'block';
+  animation(marinaElement, 'left', -284, -5, 1, 500, 'show_tutorial_text_frame')
 }
 
 function show_tutorial_text_frame() {
-  var _0xdbf0x36 = document['getElementsByClassName']('tutorial_text_frame')[0];
-  _0xdbf0x36['style']['display'] = 'block';
-  animation(_0xdbf0x36, 'width', 0, 672, 1, 500, 'show_tutorial_print_text')
+  var element = document['getElementsByClassName']('tutorial_text_frame')[0];
+  element['style']['display'] = 'block';
+  animation(element, 'width', 0, 672, 1, 500, 'show_tutorial_print_text')
 }
 
 function show_tutorial_print_text(_0xdbf0x42) {
-  var _0xdbf0x5d = parseInt(_0xdbf0x42['parentNode']['dataset']['mode']);
+  var index = parseInt(_0xdbf0x42['parentNode']['dataset']['mode']);
   var _0xdbf0x36 = document['getElementsByClassName']('tutorial_text')[0];
-  var _0xdbf0x168 = ['Здравия желаю, товарищ генерал! Вы желаете пройти инструктаж?', 'Нам срочно нужна боевая поддержка на поле боя против Третьего рейха.', 'Отправляйтесь на фронт, чтобы выполнить приказ из штаба.', 'Уничтожьте в деревне укрепившийся вражеский отряд.', 'Поздравляю с успешным выполнением приказа, генерал!', 'Срочная информация! Отправляйтесь на фронт, чтобы выполнить новый приказ из штаба.', 'Появились секретные данные, где скрывается генерал-полковник Эрвин Йенеке.', '', 'Используйте фугасный снаряд из вашего арсенала.', '', 'Превосходный бой! Верховное командование поручает Вам уничтожение элиты Третьего рейха! Рекомендую идти на их штурм в команде проверенных боевых товарищей.', 'После сложного боя, необходимо восполнить ресурсы армии и получить заслуженную награду.', 'За победу над боссом выпадают два ящика: один с техникой, другой - с ресурсами. Не забывайте, что количество мест для хранения ящиков ограничено!', 'Ящики с техникой всегда доступны для вскрытия. Давайте откроем один из них.', '', '', 'Превосходная работа! Количество техники в ангаре увеличено.', 'Для более эффективного сражения, необходимо улучшить огневую мощь боевых снарядов.', 'Давайте применим сортировку техники и найдём ту, которую мы можем улучшить.', '', 'Здесь происходит улучшение техники и отображается изменение урона от боевых снарядов.', 'Отличная работа! Огневая мощь боевых снарядов увеличена.', 'Враг наступает со всех сторон. Нам не обойтись без помощи боевых товарищей, генерал!', 'Больше нет времени на разговоры, враг на подходе. Вперёд на защиту Родины, генерал!', '', '', '', '', '', '', '', 'Вы осознаёте необратимые последствия после ваших действий?', '', 'Генерал! Теперь Вам доступен раздел "Таланты", где Вы можете улучшить свои боевые характеристики. Для этого Вам потребуются очки талантов.', 'Добыть таланты Вы сможете в битве с выдающимся военным стратегом генералом-полковником Хайнцем Гудерианом.', 'Важная информация! В бою с боссом, Вам не стоит рассчитывать на помощь от боевых товарищей и придётся встретиться с врагом лицом к лицу на поле боя.', 'Перед нападением убедитесь в своей боевой готовности, генерал.'];
-  var _0xdbf0x1e = _0xdbf0x168[_0xdbf0x5d];
-  if (_0xdbf0x5d != 0 && _0xdbf0x5d != 31) {
+  var phrases = ['Здравия желаю, товарищ генерал! Вы желаете пройти инструктаж?', 'Нам срочно нужна боевая поддержка на поле боя против Третьего рейха.', 'Отправляйтесь на фронт, чтобы выполнить приказ из штаба.', 'Уничтожьте в деревне укрепившийся вражеский отряд.', 'Поздравляю с успешным выполнением приказа, генерал!', 'Срочная информация! Отправляйтесь на фронт, чтобы выполнить новый приказ из штаба.', 'Появились секретные данные, где скрывается генерал-полковник Эрвин Йенеке.', '', 'Используйте фугасный снаряд из вашего арсенала.', '', 'Превосходный бой! Верховное командование поручает Вам уничтожение элиты Третьего рейха! Рекомендую идти на их штурм в команде проверенных боевых товарищей.', 'После сложного боя, необходимо восполнить ресурсы армии и получить заслуженную награду.', 'За победу над боссом выпадают два ящика: один с техникой, другой - с ресурсами. Не забывайте, что количество мест для хранения ящиков ограничено!', 'Ящики с техникой всегда доступны для вскрытия. Давайте откроем один из них.', '', '', 'Превосходная работа! Количество техники в ангаре увеличено.', 'Для более эффективного сражения, необходимо улучшить огневую мощь боевых снарядов.', 'Давайте применим сортировку техники и найдём ту, которую мы можем улучшить.', '', 'Здесь происходит улучшение техники и отображается изменение урона от боевых снарядов.', 'Отличная работа! Огневая мощь боевых снарядов увеличена.', 'Враг наступает со всех сторон. Нам не обойтись без помощи боевых товарищей, генерал!', 'Больше нет времени на разговоры, враг на подходе. Вперёд на защиту Родины, генерал!', '', '', '', '', '', '', '', 'Вы осознаёте необратимые последствия после ваших действий?', '', 'Генерал! Теперь Вам доступен раздел "Таланты", где Вы можете улучшить свои боевые характеристики. Для этого Вам потребуются очки талантов.', 'Добыть таланты Вы сможете в битве с выдающимся военным стратегом генералом-полковником Хайнцем Гудерианом.', 'Важная информация! В бою с боссом, Вам не стоит рассчитывать на помощь от боевых товарищей и придётся встретиться с врагом лицом к лицу на поле боя.', 'Перед нападением убедитесь в своей боевой готовности, генерал.'];
+  var _0xdbf0x1e = phrases[index];
+  if (index != 0 && index != 31) {
     if (window['player']['settings']['music'] == 1) {
-      play_effect_down_volume('tutorial_' + _0xdbf0x5d + '.mp3')
+      play_effect_down_volume('tutorial_' + index + '.mp3')
     } else {
-      play_effect('tutorial_' + _0xdbf0x5d + '.mp3')
+      play_effect('tutorial_' + index + '.mp3')
     }
   };
   var _0xdbf0x44a = [0, 1500, 1000, 1000, 1000, 1500, 1500, 0, 1500, 0, 1500, 1000, 2000, 1500, 0, 0, 1000, 1000, 1000, 0, 1000, 1000, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1500, 1500, 1500, 1500];
-  print_tutorial(Array['from'](_0xdbf0x1e), _0xdbf0x36, 50, 'show_tutorial_final_' + _0xdbf0x5d, _0xdbf0x44a[_0xdbf0x5d], _0xdbf0x5d)
+  print_tutorial(Array['from'](_0xdbf0x1e), _0xdbf0x36, 50, 'show_tutorial_final_' + index, _0xdbf0x44a[index], index)
 }
 
 function print_tutorial(_0xdbf0x168, _0xdbf0x36, _0xdbf0x44c, _0xdbf0x1d, _0xdbf0x44d, _0xdbf0x5d) {
@@ -19923,9 +19923,9 @@ function show_tutorial_final_21() {
 }
 
 function show_tutorial_finish_21() {
-  var _0xdbf0x9f = document['getElementsByClassName']('hangar_block')[0]['getElementsByClassName']('modal_close')[0];
-  _0xdbf0x9f['style']['display'] = 'block';
-  _0xdbf0x9f['style']['pointerEvents'] = 'auto';
+  var modal = document['getElementsByClassName']('hangar_block')[0]['getElementsByClassName']('modal_close')[0];
+  modal['style']['display'] = 'block';
+  modal['style']['pointerEvents'] = 'auto';
   tutorial_reset();
   tutorial_arrow(103, 163, 'up', 954, 0)
 }
@@ -19949,12 +19949,12 @@ function show_tutorial_finish_23() {
   document['getElementById']('main_missions')['style']['pointerEvents'] = '';
   document['getElementById']('main_raids')['style']['pointerEvents'] = '';
   document['getElementById']('main_hangar')['style']['pointerEvents'] = '';
-  var _0xdbf0x9f = document['getElementById']('btn_close');
-  _0xdbf0x9f['classList']['remove']('button_dark');
-  _0xdbf0x9f['classList']['add']('button_red');
-  var _0xdbf0x55 = document['getElementsByClassName']('modal_close');
-  for (var _0xdbf0x4 = 0; _0xdbf0x4 < _0xdbf0x55['length']; _0xdbf0x4++) {
-    _0xdbf0x55[_0xdbf0x4]['style']['display'] = ''
+  var btnClose = document['getElementById']('btn_close');
+  btnClose['classList']['remove']('button_dark');
+  btnClose['classList']['add']('button_red');
+  var modals = document['getElementsByClassName']('modal_close');
+  for (var i = 0; i < modals['length']; i++) {
+    modals[i]['style']['display'] = ''
   };
   document['getElementsByClassName']('boss_wiki_icon')[0]['style']['display'] = 'block';
   document['getElementsByClassName']('missions_map')[0]['getElementsByClassName']('modal_close')[0]['style']['display'] = 'block';
@@ -19973,10 +19973,10 @@ function show_tutorial_finish_30() {
 }
 
 function show_tutorial_final_31() {
-  var _0xdbf0x9f = document['getElementsByClassName']('button_tutorial_yes')[0];
-  _0xdbf0x9f['onclick'] = tutorial_0_no_yes;
-  var _0xdbf0x9f = document['getElementsByClassName']('button_tutorial_no')[0];
-  _0xdbf0x9f['onclick'] = tutorial_0_no_no
+  var yesButton = document['getElementsByClassName']('button_tutorial_yes')[0];
+  yesButton['onclick'] = tutorial_0_no_yes;
+  var noButton = document['getElementsByClassName']('button_tutorial_no')[0];
+  noButton['onclick'] = tutorial_0_no_no
 }
 
 function show_tutorial_finish_31() {
@@ -20027,16 +20027,16 @@ function show_tutorial_finish_36() {
   tutorial_reset();
   server_action('talents.tutorial', {});
   window['player']['static_resources']['tutorial_talents'] = 1;
-  var _0xdbf0x36 = document['getElementsByClassName']('header')[0];
-  _0xdbf0x36['style']['pointerEvents'] = '';
-  _0xdbf0x36['getElementsByClassName']('music_interface')[0]['style']['pointerEvents'] = '';
-  _0xdbf0x36['getElementsByClassName']('sound_interface')[0]['style']['pointerEvents'] = ''
+  var headerElement = document['getElementsByClassName']('header')[0];
+  headerElement['style']['pointerEvents'] = '';
+  headerElement['getElementsByClassName']('music_interface')[0]['style']['pointerEvents'] = '';
+  headerElement['getElementsByClassName']('sound_interface')[0]['style']['pointerEvents'] = ''
 }
 
-function random(_0xdbf0x493) {
-  var _0xdbf0x494 = Math['sin'](_0xdbf0x493);
+function random(seed) {
+  var _0xdbf0x494 = Math['sin'](seed);
   var _0xdbf0x495 = Math['round'](_0xdbf0x494 * 4294967296);
   var _0xdbf0x496 = _0xdbf0x495 & 65535;
-  var _0xdbf0x36 = _0xdbf0x496 / 65536;
-  return _0xdbf0x36
+  var output = _0xdbf0x496 / 65536;
+  return output
 }
